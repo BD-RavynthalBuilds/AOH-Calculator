@@ -1,442 +1,1713 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>AOH Helper</title>
+
 <style>
+
+/* =========================================================
+   GLOBAL RESET
+   ========================================================= */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Luxury Animated Background matched to dailies */
+
+/* =========================================================
+   MAIN BACKGROUND
+   ========================================================= */
+
 .container {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background: radial-gradient(circle at 20% 30%, #1a2226 0%, #0d1113 70%);
+
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      #1a2226 0%,
+      #0d1113 70%
+    );
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   overflow: hidden;
-  font-family: 'Segoe UI', Arial, sans-serif;
+
+  font-family:
+    'Segoe UI',
+    Arial,
+    sans-serif;
 }
+
 
 .container::before {
   content: "";
+
   position: absolute;
+
   width: 150%;
   height: 150%;
-  background-image: radial-gradient(#bd9f67 1px, transparent 1px);
+
+  background-image:
+    radial-gradient(
+      #bd9f67 1px,
+      transparent 1px
+    );
+
   background-size: 48px 48px;
+
   opacity: 0.04;
-  animation: backgroundShift 180s linear infinite;
+
+  animation:
+    backgroundShift 180s linear infinite;
 }
 
+
 @keyframes backgroundShift {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(-50%, -50%); }
+
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(-50%, -50%);
+  }
+
 }
+
+
+/* =========================================================
+   MAIN CONTENT PANEL
+   ========================================================= */
 
 .content {
   position: relative;
+
   z-index: 10;
+
   display: flex;
   flex-direction: column;
   align-items: center;
+
   gap: 20px;
+
   text-align: center;
+
   background: #243137;
+
   padding: 40px;
+
   border-radius: 10px;
-  border: 1px solid rgba(189, 159, 103, 0.2);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+
+  border:
+    1px solid
+    rgba(189, 159, 103, 0.2);
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.4);
 }
+
+
+/* =========================================================
+   HEADINGS
+   ========================================================= */
 
 h1 {
   color: #bd9f67;
+
   font-size: 2.2rem;
+
   font-weight: 400;
+
   letter-spacing: 2px;
-  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+
+  text-shadow:
+    0 4px 15px
+    rgba(0, 0, 0, 0.5);
 }
+
 
 p {
   color: #e0d0b5;
+
   font-size: 1.1rem;
 }
+
+
+/* =========================================================
+   LEVEL INPUT
+   ========================================================= */
 
 input[type="number"] {
   background: #1a2226;
-  border: 1px solid #bd9f67;
+
+  border:
+    1px solid
+    #bd9f67;
+
   border-radius: 4px;
+
   padding: 12px;
+
   color: #e0d0b5;
+
   font-size: 1.1rem;
+
   text-align: center;
+
   width: 180px;
+
   outline: none;
-  transition: all 0.3s ease;
+
+  transition:
+    all 0.3s ease;
 }
+
 
 input[type="number"]:focus {
-  box-shadow: 0 0 10px rgba(189, 159, 103, 0.3);
+  box-shadow:
+    0 0 10px
+    rgba(189, 159, 103, 0.3);
 }
 
-/* ==========================================================================
-   Global Button Upgrade - Universal Conic Aura Matrix
-   ========================================================================== */
+
+/* =========================================================
+   GLOBAL BUTTON
+   ========================================================= */
+
 button {
   position: relative;
+
   display: inline-block;
+
   padding: 12px 28px;
+
   font-size: 15px;
+
   font-weight: bold;
+
   background: transparent !important;
+
   border: none !important;
+
   cursor: pointer;
+
   border-radius: 50px !important;
+
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.3s ease;
+
   z-index: 1;
+
   text-decoration: none;
 }
 
+
 button:hover {
   transform: scale(1.04);
-  box-shadow: 0 0 20px rgba(189, 159, 103, 0.3);
+
+  box-shadow:
+    0 0 20px
+    rgba(189, 159, 103, 0.3);
 }
+
 
 button::before {
   content: "";
+
   position: absolute;
+
   top: -50%;
   left: -50%;
+
   width: 200%;
   height: 200%;
-  background: conic-gradient(
-    from 0deg,
-    #bd9f67 0%,
-    #e0d0b5 25%,
-    #9c8252 50%,
-    #f3e8d5 75%,
-    #bd9f67 100%
-  );
+
+  background:
+    conic-gradient(
+      from 0deg,
+      #bd9f67 0%,
+      #e0d0b5 25%,
+      #9c8252 50%,
+      #f3e8d5 75%,
+      #bd9f67 100%
+    );
+
   z-index: -2;
+
   filter: blur(4px);
+
   transform: rotate(0deg);
-  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+
+  transition:
+    transform
+    1.2s
+    cubic-bezier(0.25, 1, 0.5, 1);
 }
+
 
 button:hover::before {
   transform: rotate(180deg);
 }
 
+
 button::after {
   content: "";
+
   position: absolute;
+
   inset: 2px;
+
   background: #1a2226;
+
   border-radius: 48px;
+
   z-index: -1;
-  transition: background 0.4s ease;
+
+  transition:
+    background 0.4s ease;
 }
 
+
 button:hover::after {
-  background: rgba(189, 159, 103, 0.08);
+  background:
+    rgba(189, 159, 103, 0.08);
 }
+
 
 button span {
   display: block;
+
   position: relative;
+
   z-index: 2;
+
   font-weight: bold;
+
   letter-spacing: 1.5px;
+
   text-transform: uppercase;
+
   color: #e0d0b5;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
+
+  transition:
+    color 0.3s ease,
+    text-shadow 0.3s ease;
 }
+
 
 button:hover span {
   color: #ffffff;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+
+  text-shadow:
+    0 1px 4px
+    rgba(0, 0, 0, 0.8);
 }
+
 
 button:active {
   transform: scale(0.98);
 }
 
 
-@media (max-width: 480px) {
-  .content { padding: 24px 16px; width: 92%; }
-  h1 { font-size: 1.7rem; }
-  input[type="number"] { width: 140px; }
-}
-/* ─── Hub Cards (flip-reveal, themed) ─── */
+/* =========================================================
+   AOH HUB CARD GRID
+   ========================================================= */
+
 .hub-nav {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+
+  grid-template-columns:
+    repeat(3, 195px);
+
+  gap: 18px;
+
   width: 100%;
+
   margin-top: 8px;
+
+  justify-content: center;
 }
+
+
+/* =========================================================
+   AOH HUB CARD
+   ========================================================= */
 
 .hub-card {
-  position: relative;
-  height: 128px;
-  background: #1a2226;
-  border: 1px solid rgba(189,159,103,0.15);
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
+  width: 195px;
+  height: 285px;
+
+  background: #313131;
+
+  border-radius: 20px;
+
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   justify-content: center;
+
+  color: white;
+
+  text-decoration: none;
+
+  position: relative;
+
   overflow: hidden;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
+
+  cursor: pointer;
+
+  border: none;
+
+  transition:
+    0.2s ease-in-out;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
+
+/* =========================================================
+   SVG ICON
+   ========================================================= */
+
 .hub-card .card-icon {
-  font-size: 2rem;
+  width: 92px;
+  height: 92px;
+
   position: absolute;
+
   z-index: 1;
-  transition: 0.25s ease-in-out;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+
+  transition:
+    0.2s ease-in-out;
+
+  filter:
+    drop-shadow(
+      0 3px 8px
+      rgba(0, 0, 0, 0.55)
+    );
 }
+
+
+/* =========================================================
+   CARD TEXT
+   ========================================================= */
 
 .hub-card .textBox {
   opacity: 0;
+
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   justify-content: center;
-  gap: 5px;
-  padding: 0 10px;
+
+  gap: 15px;
+
+  padding: 15px;
+
+  text-align: center;
+
   z-index: 2;
-  transition: 0.25s ease-in-out;
+
+  transition:
+    0.2s ease-in-out;
 }
 
-.hub-card .card-label {
-  color: #bd9f67;
-  font-size: 0.85rem;
+
+.hub-card .textBox > .card-label {
   font-weight: bold;
-  letter-spacing: 0.5px;
+
+  font-size: 20px;
+
+  color: #ffffff;
 }
-.hub-card .card-desc {
-  color: #a49683;
-  font-size: 0.72rem;
+
+
+.hub-card .textBox > .card-desc {
+  font-size: 12px;
+
+  color: lightgrey;
+
   line-height: 1.4;
 }
 
-.hub-card:hover {
-  transform: scale(1.04);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.45);
-  border-color: rgba(189,159,103,0.4);
-}
-.hub-card:hover .card-icon {
-  transform: translateY(-22px) scale(0.85);
-  opacity: 0.3;
-  filter: blur(3px) drop-shadow(0 2px 6px rgba(0,0,0,0.5));
-  animation: iconFloat 3s ease-in-out infinite;
-}
-.hub-card:hover .textBox {
-  opacity: 1;
+
+/* =========================================================
+   DESKTOP HOVER ONLY
+   Prevents touchscreen hover from getting stuck.
+   ========================================================= */
+
+@media (hover: hover) and (pointer: fine) {
+
+  .hub-card:hover > .textBox {
+    opacity: 1;
+  }
+
+
+  .hub-card:hover > .card-icon {
+    width: 105px;
+    height: 105px;
+
+    filter:
+      blur(7px)
+      drop-shadow(
+        0 3px 8px
+        rgba(0, 0, 0, 0.55)
+      );
+
+    animation:
+      anim 3s infinite;
+  }
+
+
+  .hub-card:hover {
+    transform:
+      scale(1.04)
+      rotate(-1deg);
+
+    box-shadow:
+      0 12px 30px
+      rgba(0, 0, 0, 0.45);
+  }
+
 }
 
-@keyframes iconFloat {
-  0% { transform: translateY(-22px) scale(0.85); }
-  50% { transform: translateY(-34px) scale(0.85); }
-  100% { transform: translateY(-22px) scale(0.85); }
+
+/* =========================================================
+   TOUCHSCREEN BEHAVIOR
+   ========================================================= */
+
+@media (hover: none), (pointer: coarse) {
+
+  .hub-card {
+    touch-action: manipulation;
+  }
+
+
+  /* Text is permanently visible on mobile */
+
+  .hub-card .textBox {
+    opacity: 1;
+  }
+
+
+  /* Normal icon state */
+
+  .hub-card .card-icon {
+    width: 70px;
+    height: 70px;
+
+    filter:
+      drop-shadow(
+        0 3px 8px
+        rgba(0, 0, 0, 0.55)
+      );
+
+    animation: none;
+  }
+
+
+  /* Prevent browser hover state */
+
+  .hub-card:hover {
+    transform: none;
+
+    box-shadow: none;
+  }
+
+
+  .hub-card:hover > .card-icon {
+    width: 70px;
+    height: 70px;
+
+    filter:
+      drop-shadow(
+        0 3px 8px
+        rgba(0, 0, 0, 0.55)
+      );
+
+    animation: none;
+  }
+
+
+  /* Press feedback */
+
+  .hub-card:active {
+    transform: scale(0.97);
+
+    box-shadow:
+      0 6px 16px
+      rgba(0, 0, 0, 0.35);
+  }
+
+
+  .hub-card:active .card-icon {
+    transform: scale(0.95);
+  }
+
 }
+
+
+/* =========================================================
+   CARD FLOATING ANIMATION
+   ========================================================= */
+
+@keyframes anim {
+
+  0% {
+    transform:
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateY(-20px);
+  }
+
+  100% {
+    transform:
+      translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   LEVEL BADGE
+   ========================================================= */
 
 .level-badge {
   font-size: 0.8rem;
+
   color: #bd9f67;
-  background: rgba(189,159,103,0.1);
-  border: 1px solid rgba(189,159,103,0.2);
+
+  background:
+    rgba(189, 159, 103, 0.1);
+
+  border:
+    1px solid
+    rgba(189, 159, 103, 0.2);
+
   border-radius: 20px;
+
   padding: 3px 12px;
+
   letter-spacing: 0.5px;
 }
 
+
+/* =========================================================
+   LEVEL EDIT ROW
+   ========================================================= */
+
 .level-edit-row {
   display: flex;
+
   align-items: center;
+
   gap: 8px;
+
   flex-wrap: wrap;
+
   justify-content: center;
 }
 
-#editLevelWrap { display: none; }
+
+#editLevelWrap {
+  display: none;
+}
+
+
+/* =========================================================
+   SMALL LINK
+   ========================================================= */
 
 .small-link {
   font-size: 0.75rem;
-  color: rgba(189,159,103,0.4);
+
+  color:
+    rgba(189, 159, 103, 0.4);
+
   cursor: pointer;
-  border-bottom: 1px dashed rgba(189,159,103,0.2);
-  transition: color 0.2s;
+
+  border-bottom:
+    1px dashed
+    rgba(189, 159, 103, 0.2);
+
+  transition:
+    color 0.2s;
 }
-.small-link:hover { color: rgba(189,159,103,0.7); }
+
+
+.small-link:hover {
+  color:
+    rgba(189, 159, 103, 0.7);
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .hub-nav {
+    grid-template-columns:
+      repeat(2, 195px);
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media (max-width: 480px) {
-  .hub-nav { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .hub-card { height: 100px; }
-  .hub-card .card-icon { font-size: 1.5rem; }
-  .hub-card .card-label { font-size: 0.75rem; }
-  .hub-card .card-desc { font-size: 0.65rem; }
+
+  .content {
+    padding: 24px 16px;
+
+    width: 94%;
+
+    max-height: 96vh;
+
+    overflow-y: auto;
+  }
+
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+
+  input[type="number"] {
+    width: 140px;
+  }
+
+
+  .hub-nav {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+
+  .hub-card {
+    width: 100%;
+
+    height: 220px;
+  }
+
+
+  .hub-card .card-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+
+  .hub-card:hover > .card-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+
+  .hub-card .textBox {
+    gap: 10px;
+  }
+
+
+  .hub-card .textBox > .card-label {
+    font-size: 16px;
+  }
+
+
+  .hub-card .textBox > .card-desc {
+    font-size: 11px;
+  }
+
 }
+
 </style>
 </head>
+
+
 <body>
 
-<!-- Entry screen (level input) -->
+
+<!-- =======================================================
+     ENTRY SCREEN
+     ======================================================= -->
+
 <div class="container" id="entryScreen">
+
   <div class="content">
+
     <h1>AOH Helper</h1>
-    <p>Enter your current level to get started:</p>
-    <input type="number" id="levelInput" placeholder="Your Level" min="1">
-    <button onclick="start()"><span>Start</span></button>
+
+    <p>
+      Enter your current level to get started:
+    </p>
+
+    <input
+      type="number"
+      id="levelInput"
+      placeholder="Your Level"
+      min="1"
+    >
+
+    <button onclick="start()">
+      <span>Start</span>
+    </button>
+
   </div>
+
 </div>
 
-<!-- Hub screen -->
-<div class="container" id="hubScreen" style="display:none;">
-  <div class="content" style="max-width:520px;">
+
+
+<!-- =======================================================
+     HUB SCREEN
+     ======================================================= -->
+
+<div
+  class="container"
+  id="hubScreen"
+  style="display:none;"
+>
+
+  <div
+    class="content"
+    style="max-width:760px;"
+  >
+
     <h1>AOH Helper</h1>
+
+
+    <!-- Current Level -->
 
     <div class="level-edit-row">
-      <div class="level-badge" id="hubLevelBadge">Level ---</div>
-      <span class="small-link" onclick="showLevelEdit()">change</span>
+
+      <div
+        class="level-badge"
+        id="hubLevelBadge"
+      >
+        Level ---
+      </div>
+
+      <span
+        class="small-link"
+        onclick="showLevelEdit()"
+      >
+        change
+      </span>
+
     </div>
 
-    <div id="editLevelWrap" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center;">
-      <input type="number" id="editLevelInput" placeholder="New level" min="1" style="width:120px;">
-      <button onclick="updateLevel()" style="padding:8px 16px; font-size:13px;"><span>Update</span></button>
-      <span class="small-link" onclick="hideLevelEdit()">cancel</span>
+
+    <!-- Level Editing -->
+
+    <div
+      id="editLevelWrap"
+      style="
+        display:flex;
+        align-items:center;
+        gap:8px;
+        flex-wrap:wrap;
+        justify-content:center;
+      "
+    >
+
+      <input
+        type="number"
+        id="editLevelInput"
+        placeholder="New level"
+        min="1"
+        style="width:120px;"
+      >
+
+      <button
+        onclick="updateLevel()"
+        style="
+          padding:8px 16px;
+          font-size:13px;
+        "
+      >
+        <span>Update</span>
+      </button>
+
+      <span
+        class="small-link"
+        onclick="hideLevelEdit()"
+      >
+        cancel
+      </span>
+
     </div>
+
+
+
+    <!-- =================================================
+         HUB CARDS
+         ================================================= -->
 
     <nav class="hub-nav">
-      <a class="hub-card" id="link-dailies" href="#">
-        <span class="card-icon">📊</span>
+
+
+      <!-- DAILY CHECKER -->
+
+      <a
+        class="hub-card"
+        id="link-dailies"
+        href="#"
+      >
+
+        <svg
+          class="card-icon"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+
+          <rect
+            x="18"
+            y="18"
+            width="64"
+            height="64"
+            rx="8"
+            fill="none"
+            stroke="#bd9f67"
+            stroke-width="5"
+          />
+
+          <line
+            x1="32"
+            y1="38"
+            x2="68"
+            y2="38"
+            stroke="#bd9f67"
+            stroke-width="5"
+            stroke-linecap="round"
+          />
+
+          <line
+            x1="32"
+            y1="52"
+            x2="68"
+            y2="52"
+            stroke="#bd9f67"
+            stroke-width="5"
+            stroke-linecap="round"
+          />
+
+          <line
+            x1="32"
+            y1="66"
+            x2="54"
+            y2="66"
+            stroke="#bd9f67"
+            stroke-width="5"
+            stroke-linecap="round"
+          />
+
+          <circle
+            cx="72"
+            cy="70"
+            r="11"
+            fill="#313131"
+            stroke="#e0d0b5"
+            stroke-width="4"
+          />
+
+          <path
+            d="M67 70l3 3 6-7"
+            fill="none"
+            stroke="#e0d0b5"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+
+        </svg>
+
+
         <div class="textBox">
-          <span class="card-label">Daily Checker</span>
-          <span class="card-desc">See your daily level limit</span>
+
+          <span class="card-label">
+            Daily Checker
+          </span>
+
+          <span class="card-desc">
+            See your daily level limit
+          </span>
+
         </div>
+
       </a>
-      <a class="hub-card" id="link-clans" href="#">
-        <span class="card-icon">🛡️</span>
+
+
+
+      <!-- CLANS -->
+
+      <a
+        class="hub-card"
+        id="link-clans"
+        href="#"
+      >
+
+        <svg
+          class="card-icon"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+
+          <path
+            d="
+              M50 12
+              L79 23
+              V45
+              C79 65 67 79 50 88
+              C33 79 21 65 21 45
+              V23
+              L50 12Z
+            "
+            fill="none"
+            stroke="#bd9f67"
+            stroke-width="5"
+            stroke-linejoin="round"
+          />
+
+          <circle
+            cx="50"
+            cy="40"
+            r="9"
+            fill="none"
+            stroke="#e0d0b5"
+            stroke-width="4"
+          />
+
+          <path
+            d="
+              M34 66
+              C34 56 41 51 50 51
+              C59 51 66 56 66 66
+            "
+            fill="none"
+            stroke="#e0d0b5"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+
+        </svg>
+
+
         <div class="textBox">
-          <span class="card-label">Clans</span>
-          <span class="card-desc">Members, roles &amp; leveling sheets</span>
+
+          <span class="card-label">
+            Clans
+          </span>
+
+          <span class="card-desc">
+            Members, roles &amp; leveling sheets
+          </span>
+
         </div>
+
       </a>
-      <a class="hub-card" id="link-planner" href="#">
-        <span class="card-icon">📅</span>
+
+
+
+      <!-- LEVEL PLANNER -->
+
+      <a
+        class="hub-card"
+        id="link-planner"
+        href="#"
+      >
+
+        <svg
+          class="card-icon"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+
+          <rect
+            x="17"
+            y="22"
+            width="66"
+            height="61"
+            rx="7"
+            fill="none"
+            stroke="#bd9f67"
+            stroke-width="5"
+          />
+
+          <line
+            x1="17"
+            y1="38"
+            x2="83"
+            y2="38"
+            stroke="#bd9f67"
+            stroke-width="5"
+          />
+
+          <line
+            x1="31"
+            y1="14"
+            x2="31"
+            y2="29"
+            stroke="#e0d0b5"
+            stroke-width="5"
+            stroke-linecap="round"
+          />
+
+          <line
+            x1="69"
+            y1="14"
+            x2="69"
+            y2="29"
+            stroke="#e0d0b5"
+            stroke-width="5"
+            stroke-linecap="round"
+          />
+
+          <circle
+            cx="35"
+            cy="52"
+            r="4"
+            fill="#e0d0b5"
+          />
+
+          <circle
+            cx="50"
+            cy="52"
+            r="4"
+            fill="#e0d0b5"
+          />
+
+          <circle
+            cx="65"
+            cy="52"
+            r="4"
+            fill="#e0d0b5"
+          />
+
+          <circle
+            cx="35"
+            cy="67"
+            r="4"
+            fill="#e0d0b5"
+          />
+
+          <circle
+            cx="50"
+            cy="67"
+            r="4"
+            fill="#bd9f67"
+          />
+
+          <circle
+            cx="65"
+            cy="67"
+            r="4"
+            fill="#e0d0b5"
+          />
+
+        </svg>
+
+
         <div class="textBox">
-          <span class="card-label">Level Planner</span>
-          <span class="card-desc">Plan your progression</span>
+
+          <span class="card-label">
+            Level Planner
+          </span>
+
+          <span class="card-desc">
+            Plan your progression
+          </span>
+
         </div>
+
       </a>
-      <a class="hub-card" id="link-xp" href="#">
-        <span class="card-icon">✨</span>
+
+
+
+      <!-- XP CALCULATOR -->
+
+      <a
+        class="hub-card"
+        id="link-xp"
+        href="#"
+      >
+
+        <svg
+          class="card-icon"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+
+          <path
+            d="
+              M50 12
+              L57 31
+              L78 32
+              L62 45
+              L67 65
+              L50 54
+              L33 65
+              L38 45
+              L22 32
+              L43 31
+              L50 12Z
+            "
+            fill="none"
+            stroke="#bd9f67"
+            stroke-width="5"
+            stroke-linejoin="round"
+          />
+
+          <path
+            d="M50 31V48"
+            stroke="#e0d0b5"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+
+          <circle
+            cx="50"
+            cy="56"
+            r="2.5"
+            fill="#e0d0b5"
+          />
+
+        </svg>
+
+
         <div class="textBox">
-          <span class="card-label">XP Calculator</span>
-          <span class="card-desc">XP needed between levels</span>
+
+          <span class="card-label">
+            XP Calculator
+          </span>
+
+          <span class="card-desc">
+            XP needed between levels
+          </span>
+
         </div>
+
       </a>
-      <a class="hub-card" id="link-punishment" href="#">
-        <span class="card-icon">⚠️</span>
+
+
+
+      <!-- PUNISHMENT CHECKER -->
+
+      <a
+        class="hub-card"
+        id="link-punishment"
+        href="#"
+      >
+
+        <svg
+          class="card-icon"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+
+          <path
+            d="M50 12L87 79H13L50 12Z"
+            fill="none"
+            stroke="#bd9f67"
+            stroke-width="5"
+            stroke-linejoin="round"
+          />
+
+          <line
+            x1="50"
+            y1="34"
+            x2="50"
+            y2="56"
+            stroke="#e0d0b5"
+            stroke-width="6"
+            stroke-linecap="round"
+          />
+
+          <circle
+            cx="50"
+            cy="67"
+            r="3.5"
+            fill="#e0d0b5"
+          />
+
+        </svg>
+
+
         <div class="textBox">
-          <span class="card-label">Punishment Checker</span>
-          <span class="card-desc">Analyze ban risk</span>
+
+          <span class="card-label">
+            Punishment Checker
+          </span>
+
+          <span class="card-desc">
+            Analyze ban risk
+          </span>
+
         </div>
+
       </a>
-      <a class="hub-card" id="link-rules" href="#">
-        <span class="card-icon">📜</span>
+
+
+
+      <!-- RULES -->
+
+      <a
+        class="hub-card"
+        id="link-rules"
+        href="#"
+      >
+
+        <svg
+          class="card-icon"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+
+          <path
+            d="M25 17H65L77 29V83H25V17Z"
+            fill="none"
+            stroke="#bd9f67"
+            stroke-width="5"
+            stroke-linejoin="round"
+          />
+
+          <path
+            d="M65 17V30H77"
+            fill="none"
+            stroke="#e0d0b5"
+            stroke-width="5"
+            stroke-linejoin="round"
+          />
+
+          <line
+            x1="35"
+            y1="43"
+            x2="67"
+            y2="43"
+            stroke="#e0d0b5"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+
+          <line
+            x1="35"
+            y1="55"
+            x2="67"
+            y2="55"
+            stroke="#e0d0b5"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+
+          <line
+            x1="35"
+            y1="67"
+            x2="58"
+            y2="67"
+            stroke="#e0d0b5"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+
+        </svg>
+
+
         <div class="textBox">
-          <span class="card-label">Rules</span>
-          <span class="card-desc">Official server rules</span>
+
+          <span class="card-label">
+            Rules
+          </span>
+
+          <span class="card-desc">
+            Official server rules
+          </span>
+
         </div>
+
       </a>
-      <a class="hub-card" id="link-changelog" href="#">
-        <span class="card-icon">🗒️</span>
+
+
+
+      <!-- CHANGELOG -->
+
+      <a
+        class="hub-card"
+        id="link-changelog"
+        href="#"
+      >
+
+        <svg
+          class="card-icon"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+
+          <path
+            d="M25 17H65L77 29V83H25V17Z"
+            fill="none"
+            stroke="#bd9f67"
+            stroke-width="5"
+            stroke-linejoin="round"
+          />
+
+          <path
+            d="M65 17V30H77"
+            fill="none"
+            stroke="#e0d0b5"
+            stroke-width="5"
+            stroke-linejoin="round"
+          />
+
+          <path
+            d="M35 48L42 55L56 40"
+            fill="none"
+            stroke="#bd9f67"
+            stroke-width="5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+
+          <line
+            x1="35"
+            y1="67"
+            x2="67"
+            y2="67"
+            stroke="#e0d0b5"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+
+        </svg>
+
+
         <div class="textBox">
-          <span class="card-label">Changelog</span>
-          <span class="card-desc">Rule updates &amp; patch notes</span>
+
+          <span class="card-label">
+            Changelog
+          </span>
+
+          <span class="card-desc">
+            Rule updates &amp; patch notes
+          </span>
+
         </div>
+
       </a>
+
     </nav>
+
   </div>
+
 </div>
 
+
+
+<!-- =======================================================
+     JAVASCRIPT
+     ======================================================= -->
+
 <script>
-const LS_LEVEL_KEY = "aoh_player_level";
+
+
+/* =========================================================
+   STORAGE
+   ========================================================= */
+
+const LS_LEVEL_KEY =
+  "aoh_player_level";
+
+
+/* =========================================================
+   GET STORED LEVEL
+   ========================================================= */
 
 function getStoredLevel() {
-  const v = localStorage.getItem(LS_LEVEL_KEY);
-  return v ? Number(v) : null;
+
+  const v =
+    localStorage.getItem(
+      LS_LEVEL_KEY
+    );
+
+  return v
+    ? Number(v)
+    : null;
+
 }
+
+
+/* =========================================================
+   GET LEVEL FROM URL
+   ========================================================= */
 
 function getURLLevel() {
-  const params = new URLSearchParams(window.location.search);
-  const lvl = Number(params.get("level"));
-  return (lvl && lvl > 0) ? lvl : null;
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const lvl =
+    Number(
+      params.get("level")
+    );
+
+  return (
+    lvl &&
+    lvl > 0
+  )
+    ? lvl
+    : null;
+
 }
 
-let playerLevel = getURLLevel() || getStoredLevel();
+
+/* =========================================================
+   CURRENT PLAYER LEVEL
+   ========================================================= */
+
+let playerLevel =
+  getURLLevel() ||
+  getStoredLevel();
+
+
+/* =========================================================
+   START
+   ========================================================= */
 
 function start() {
-  let lvl = Number(document.getElementById("levelInput").value);
-  if(!lvl || lvl <= 0){ alert("Enter a valid level."); return; }
+
+  let lvl =
+    Number(
+      document.getElementById(
+        "levelInput"
+      ).value
+    );
+
+
+  if (!lvl || lvl <= 0) {
+
+    alert(
+      "Enter a valid level."
+    );
+
+    return;
+  }
+
+
   playerLevel = lvl;
-  localStorage.setItem(LS_LEVEL_KEY, lvl);
+
+
+  localStorage.setItem(
+    LS_LEVEL_KEY,
+    lvl
+  );
+
+
   showHub();
+
 }
+
+
+/* =========================================================
+   SHOW HUB
+   ========================================================= */
 
 function showHub() {
-  document.getElementById("entryScreen").style.display = "none";
-  document.getElementById("hubScreen").style.display = "flex";
-  document.getElementById("hubLevelBadge").textContent = "Level " + playerLevel;
+
+  document.getElementById(
+    "entryScreen"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "hubScreen"
+  ).style.display = "flex";
+
+
+  document.getElementById(
+    "hubLevelBadge"
+  ).textContent =
+    "Level " +
+    playerLevel;
+
+
   setLinks();
+
 }
+
+
+/* =========================================================
+   SET PAGE LINKS
+   ========================================================= */
 
 function setLinks() {
-  document.getElementById("link-dailies").href     = "dailies.html?level="     + playerLevel;
-  document.getElementById("link-clans").href       = "clans.html?level="       + playerLevel;
-  document.getElementById("link-planner").href     = "planner.html?level="     + playerLevel;
-  document.getElementById("link-xp").href          = "xp.html?level="          + playerLevel;
-  document.getElementById("link-punishment").href  = "punishment.html?level="  + playerLevel;
-  document.getElementById("link-rules").href       = "rules.html?level="       + playerLevel;
-  document.getElementById("link-changelog").href   = "changelog.html?level="   + playerLevel;
+
+  document.getElementById(
+    "link-dailies"
+  ).href =
+    "dailies.html?level=" +
+    playerLevel;
+
+
+  document.getElementById(
+    "link-clans"
+  ).href =
+    "clans.html?level=" +
+    playerLevel;
+
+
+  document.getElementById(
+    "link-planner"
+  ).href =
+    "planner.html?level=" +
+    playerLevel;
+
+
+  document.getElementById(
+    "link-xp"
+  ).href =
+    "xp.html?level=" +
+    playerLevel;
+
+
+  document.getElementById(
+    "link-punishment"
+  ).href =
+    "punishment.html?level=" +
+    playerLevel;
+
+
+  document.getElementById(
+    "link-rules"
+  ).href =
+    "rules.html?level=" +
+    playerLevel;
+
+
+  document.getElementById(
+    "link-changelog"
+  ).href =
+    "changelog.html?level=" +
+    playerLevel;
+
 }
+
+
+/* =========================================================
+   SHOW LEVEL EDIT
+   ========================================================= */
 
 function showLevelEdit() {
-  document.getElementById("editLevelWrap").style.display = "flex";
-  document.getElementById("editLevelInput").focus();
+
+  document.getElementById(
+    "editLevelWrap"
+  ).style.display = "flex";
+
+
+  document.getElementById(
+    "editLevelInput"
+  ).focus();
+
 }
+
+
+/* =========================================================
+   HIDE LEVEL EDIT
+   ========================================================= */
 
 function hideLevelEdit() {
-  document.getElementById("editLevelWrap").style.display = "none";
-  document.getElementById("editLevelInput").value = "";
+
+  document.getElementById(
+    "editLevelWrap"
+  ).style.display = "none";
+
+
+  document.getElementById(
+    "editLevelInput"
+  ).value = "";
+
 }
+
+
+/* =========================================================
+   UPDATE LEVEL
+   ========================================================= */
 
 function updateLevel() {
-  const lvl = Number(document.getElementById("editLevelInput").value);
-  if(!lvl || lvl <= 0){ alert("Enter a valid level."); return; }
+
+  const lvl =
+    Number(
+      document.getElementById(
+        "editLevelInput"
+      ).value
+    );
+
+
+  if (!lvl || lvl <= 0) {
+
+    alert(
+      "Enter a valid level."
+    );
+
+    return;
+  }
+
+
   playerLevel = lvl;
-  localStorage.setItem(LS_LEVEL_KEY, lvl);
+
+
+  localStorage.setItem(
+    LS_LEVEL_KEY,
+    lvl
+  );
+
+
   hideLevelEdit();
+
+
   showHub();
+
 }
 
-// Init: skip entry screen if we already have a level
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
 if (playerLevel) {
+
   showHub();
+
 }
+
 </script>
+
 </body>
 </html>
