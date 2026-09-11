@@ -382,7 +382,7 @@ button:active {
 
 
 /* =========================================================
-   SVG ICON
+   ORIGINAL UIVERSE SVG
    ========================================================= */
 
 .hub-card .card-icon {
@@ -391,10 +391,10 @@ button:active {
 
   position: absolute;
 
-  z-index: 1;
-
   transition:
     0.2s ease-in-out;
+
+  z-index: 1;
 
   filter:
     drop-shadow(
@@ -425,10 +425,10 @@ button:active {
 
   text-align: center;
 
-  z-index: 2;
-
   transition:
     0.2s ease-in-out;
+
+  z-index: 2;
 }
 
 
@@ -452,7 +452,6 @@ button:active {
 
 /* =========================================================
    DESKTOP HOVER ONLY
-   Prevents touchscreen hover from getting stuck.
    ========================================================= */
 
 @media (hover: hover) and (pointer: fine) {
@@ -502,14 +501,10 @@ button:active {
   }
 
 
-  /* Text is permanently visible on mobile */
-
   .hub-card .textBox {
     opacity: 1;
   }
 
-
-  /* Normal icon state */
 
   .hub-card .card-icon {
     width: 70px;
@@ -524,8 +519,6 @@ button:active {
     animation: none;
   }
 
-
-  /* Prevent browser hover state */
 
   .hub-card:hover {
     transform: none;
@@ -547,8 +540,6 @@ button:active {
     animation: none;
   }
 
-
-  /* Press feedback */
 
   .hub-card:active {
     transform: scale(0.97);
@@ -803,7 +794,7 @@ button:active {
     <h1>AOH Helper</h1>
 
 
-    <!-- Current Level -->
+    <!-- CURRENT LEVEL -->
 
     <div class="level-edit-row">
 
@@ -824,7 +815,7 @@ button:active {
     </div>
 
 
-    <!-- Level Editing -->
+    <!-- LEVEL EDITING -->
 
     <div
       id="editLevelWrap"
@@ -865,7 +856,6 @@ button:active {
     </div>
 
 
-
     <!-- =================================================
          HUB CARDS
          ================================================= -->
@@ -873,7 +863,9 @@ button:active {
     <nav class="hub-nav">
 
 
-      <!-- DAILY CHECKER -->
+      <!-- =================================================
+           DAILY CHECKER
+           ================================================= -->
 
       <a
         class="hub-card"
@@ -881,70 +873,104 @@ button:active {
         href="#"
       >
 
+        <!-- ORIGINAL UIVERSE SVG -->
+
         <svg
           class="card-icon"
-          viewBox="0 0 100 100"
           xmlns="http://www.w3.org/2000/svg"
+          xml:space="preserve"
+          width="100%"
+          height="100%"
+          version="1.1"
+          shape-rendering="geometricPrecision"
+          text-rendering="geometricPrecision"
+          image-rendering="optimizeQuality"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          viewBox="0 0 784.37 1277.39"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
 
-          <rect
-            x="18"
-            y="18"
-            width="64"
-            height="64"
-            rx="8"
-            fill="none"
-            stroke="#bd9f67"
-            stroke-width="5"
-          />
+          <g id="Layer_x0020_1">
 
-          <line
-            x1="32"
-            y1="38"
-            x2="68"
-            y2="38"
-            stroke="#bd9f67"
-            stroke-width="5"
-            stroke-linecap="round"
-          />
+            <metadata
+              id="CorelCorpID_0Corel-Layer">
+            </metadata>
 
-          <line
-            x1="32"
-            y1="52"
-            x2="68"
-            y2="52"
-            stroke="#bd9f67"
-            stroke-width="5"
-            stroke-linecap="round"
-          />
+            <g id="_1421394342400">
 
-          <line
-            x1="32"
-            y1="66"
-            x2="54"
-            y2="66"
-            stroke="#bd9f67"
-            stroke-width="5"
-            stroke-linecap="round"
-          />
+              <g>
 
-          <circle
-            cx="72"
-            cy="70"
-            r="11"
-            fill="#313131"
-            stroke="#e0d0b5"
-            stroke-width="4"
-          />
+                <polygon
+                  fill="#343434"
+                  fill-rule="nonzero"
+                  points="
+                    392.07,0
+                    383.5,29.11
+                    383.5,873.74
+                    392.07,882.29
+                    784.13,650.54
+                  "
+                />
 
-          <path
-            d="M67 70l3 3 6-7"
-            fill="none"
-            stroke="#e0d0b5"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+                <polygon
+                  fill="#8C8C8C"
+                  fill-rule="nonzero"
+                  points="
+                    392.07,0
+                    -0,650.54
+                    392.07,882.29
+                    392.07,472.33
+                  "
+                />
+
+                <polygon
+                  fill="#3C3C3B"
+                  fill-rule="nonzero"
+                  points="
+                    392.07,956.52
+                    387.24,962.41
+                    387.24,1263.28
+                    392.07,1277.38
+                    784.37,724.89
+                  "
+                />
+
+                <polygon
+                  fill="#8C8C8C"
+                  fill-rule="nonzero"
+                  points="
+                    392.07,1277.38
+                    392.07,956.52
+                    -0,724.89
+                  "
+                />
+
+                <polygon
+                  fill="#141414"
+                  fill-rule="nonzero"
+                  points="
+                    392.07,882.29
+                    784.13,650.54
+                    392.07,472.33
+                  "
+                />
+
+                <polygon
+                  fill="#393939"
+                  fill-rule="nonzero"
+                  points="
+                    0,650.54
+                    392.07,882.29
+                    392.07,472.33
+                  "
+                />
+
+              </g>
+
+            </g>
+
+          </g>
 
         </svg>
 
@@ -965,7 +991,9 @@ button:active {
 
 
 
-      <!-- CLANS -->
+      <!-- =================================================
+           CLANS
+           ================================================= -->
 
       <a
         class="hub-card"
@@ -973,48 +1001,92 @@ button:active {
         href="#"
       >
 
+        <!-- ORIGINAL UIVERSE SVG -->
+
         <svg
           class="card-icon"
-          viewBox="0 0 100 100"
           xmlns="http://www.w3.org/2000/svg"
+          xml:space="preserve"
+          width="100%"
+          height="100%"
+          version="1.1"
+          shape-rendering="geometricPrecision"
+          text-rendering="geometricPrecision"
+          image-rendering="optimizeQuality"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          viewBox="0 0 784.37 1277.39"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
 
-          <path
-            d="
-              M50 12
-              L79 23
-              V45
-              C79 65 67 79 50 88
-              C33 79 21 65 21 45
-              V23
-              L50 12Z
-            "
-            fill="none"
-            stroke="#bd9f67"
-            stroke-width="5"
-            stroke-linejoin="round"
-          />
+          <g>
 
-          <circle
-            cx="50"
-            cy="40"
-            r="9"
-            fill="none"
-            stroke="#e0d0b5"
-            stroke-width="4"
-          />
+            <polygon
+              fill="#343434"
+              fill-rule="nonzero"
+              points="
+                392.07,0
+                383.5,29.11
+                383.5,873.74
+                392.07,882.29
+                784.13,650.54
+              "
+            />
 
-          <path
-            d="
-              M34 66
-              C34 56 41 51 50 51
-              C59 51 66 56 66 66
-            "
-            fill="none"
-            stroke="#e0d0b5"
-            stroke-width="4"
-            stroke-linecap="round"
-          />
+            <polygon
+              fill="#8C8C8C"
+              fill-rule="nonzero"
+              points="
+                392.07,0
+                -0,650.54
+                392.07,882.29
+                392.07,472.33
+              "
+            />
+
+            <polygon
+              fill="#3C3C3B"
+              fill-rule="nonzero"
+              points="
+                392.07,956.52
+                387.24,962.41
+                387.24,1263.28
+                392.07,1277.38
+                784.37,724.89
+              "
+            />
+
+            <polygon
+              fill="#8C8C8C"
+              fill-rule="nonzero"
+              points="
+                392.07,1277.38
+                392.07,956.52
+                -0,724.89
+              "
+            />
+
+            <polygon
+              fill="#141414"
+              fill-rule="nonzero"
+              points="
+                392.07,882.29
+                784.13,650.54
+                392.07,472.33
+              "
+            />
+
+            <polygon
+              fill="#393939"
+              fill-rule="nonzero"
+              points="
+                0,650.54
+                392.07,882.29
+                392.07,472.33
+              "
+            />
+
+          </g>
 
         </svg>
 
@@ -1035,7 +1107,9 @@ button:active {
 
 
 
-      <!-- LEVEL PLANNER -->
+      <!-- =================================================
+           LEVEL PLANNER
+           ================================================= -->
 
       <a
         class="hub-card"
@@ -1043,93 +1117,86 @@ button:active {
         href="#"
       >
 
+        <!-- ORIGINAL UIVERSE SVG -->
+
         <svg
           class="card-icon"
-          viewBox="0 0 100 100"
           xmlns="http://www.w3.org/2000/svg"
+          xml:space="preserve"
+          width="100%"
+          height="100%"
+          version="1.1"
+          shape-rendering="geometricPrecision"
+          text-rendering="geometricPrecision"
+          image-rendering="optimizeQuality"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          viewBox="0 0 784.37 1277.39"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
 
-          <rect
-            x="17"
-            y="22"
-            width="66"
-            height="61"
-            rx="7"
-            fill="none"
-            stroke="#bd9f67"
-            stroke-width="5"
-          />
+          <g>
 
-          <line
-            x1="17"
-            y1="38"
-            x2="83"
-            y2="38"
-            stroke="#bd9f67"
-            stroke-width="5"
-          />
+            <polygon
+              fill="#343434"
+              points="
+                392.07,0
+                383.5,29.11
+                383.5,873.74
+                392.07,882.29
+                784.13,650.54
+              "
+            />
 
-          <line
-            x1="31"
-            y1="14"
-            x2="31"
-            y2="29"
-            stroke="#e0d0b5"
-            stroke-width="5"
-            stroke-linecap="round"
-          />
+            <polygon
+              fill="#8C8C8C"
+              points="
+                392.07,0
+                -0,650.54
+                392.07,882.29
+                392.07,472.33
+              "
+            />
 
-          <line
-            x1="69"
-            y1="14"
-            x2="69"
-            y2="29"
-            stroke="#e0d0b5"
-            stroke-width="5"
-            stroke-linecap="round"
-          />
+            <polygon
+              fill="#3C3C3B"
+              points="
+                392.07,956.52
+                387.24,962.41
+                387.24,1263.28
+                392.07,1277.38
+                784.37,724.89
+              "
+            />
 
-          <circle
-            cx="35"
-            cy="52"
-            r="4"
-            fill="#e0d0b5"
-          />
+            <polygon
+              fill="#8C8C8C"
+              points="
+                392.07,1277.38
+                392.07,956.52
+                -0,724.89
+              "
+            />
 
-          <circle
-            cx="50"
-            cy="52"
-            r="4"
-            fill="#e0d0b5"
-          />
+            <polygon
+              fill="#141414"
+              points="
+                392.07,882.29
+                784.13,650.54
+                392.07,472.33
+              "
+            />
 
-          <circle
-            cx="65"
-            cy="52"
-            r="4"
-            fill="#e0d0b5"
-          />
+            <polygon
+              fill="#393939"
+              points="
+                0,650.54
+                392.07,882.29
+                392.07,472.33
+              "
+            />
 
-          <circle
-            cx="35"
-            cy="67"
-            r="4"
-            fill="#e0d0b5"
-          />
-
-          <circle
-            cx="50"
-            cy="67"
-            r="4"
-            fill="#bd9f67"
-          />
-
-          <circle
-            cx="65"
-            cy="67"
-            r="4"
-            fill="#e0d0b5"
-          />
+          </g>
 
         </svg>
 
@@ -1150,7 +1217,9 @@ button:active {
 
 
 
-      <!-- XP CALCULATOR -->
+      <!-- =================================================
+           XP CALCULATOR
+           ================================================= -->
 
       <a
         class="hub-card"
@@ -1158,45 +1227,86 @@ button:active {
         href="#"
       >
 
+        <!-- ORIGINAL UIVERSE SVG -->
+
         <svg
           class="card-icon"
-          viewBox="0 0 100 100"
           xmlns="http://www.w3.org/2000/svg"
+          xml:space="preserve"
+          width="100%"
+          height="100%"
+          version="1.1"
+          shape-rendering="geometricPrecision"
+          text-rendering="geometricPrecision"
+          image-rendering="optimizeQuality"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          viewBox="0 0 784.37 1277.39"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
 
-          <path
-            d="
-              M50 12
-              L57 31
-              L78 32
-              L62 45
-              L67 65
-              L50 54
-              L33 65
-              L38 45
-              L22 32
-              L43 31
-              L50 12Z
-            "
-            fill="none"
-            stroke="#bd9f67"
-            stroke-width="5"
-            stroke-linejoin="round"
-          />
+          <g>
 
-          <path
-            d="M50 31V48"
-            stroke="#e0d0b5"
-            stroke-width="4"
-            stroke-linecap="round"
-          />
+            <polygon
+              fill="#343434"
+              points="
+                392.07,0
+                383.5,29.11
+                383.5,873.74
+                392.07,882.29
+                784.13,650.54
+              "
+            />
 
-          <circle
-            cx="50"
-            cy="56"
-            r="2.5"
-            fill="#e0d0b5"
-          />
+            <polygon
+              fill="#8C8C8C"
+              points="
+                392.07,0
+                -0,650.54
+                392.07,882.29
+                392.07,472.33
+              "
+            />
+
+            <polygon
+              fill="#3C3C3B"
+              points="
+                392.07,956.52
+                387.24,962.41
+                387.24,1263.28
+                392.07,1277.38
+                784.37,724.89
+              "
+            />
+
+            <polygon
+              fill="#8C8C8C"
+              points="
+                392.07,1277.38
+                392.07,956.52
+                -0,724.89
+              "
+            />
+
+            <polygon
+              fill="#141414"
+              points="
+                392.07,882.29
+                784.13,650.54
+                392.07,472.33
+              "
+            />
+
+            <polygon
+              fill="#393939"
+              points="
+                0,650.54
+                392.07,882.29
+                392.07,472.33
+              "
+            />
+
+          </g>
 
         </svg>
 
@@ -1217,7 +1327,9 @@ button:active {
 
 
 
-      <!-- PUNISHMENT CHECKER -->
+      <!-- =================================================
+           PUNISHMENT CHECKER
+           ================================================= -->
 
       <a
         class="hub-card"
@@ -1225,36 +1337,86 @@ button:active {
         href="#"
       >
 
+        <!-- ORIGINAL UIVERSE SVG -->
+
         <svg
           class="card-icon"
-          viewBox="0 0 100 100"
           xmlns="http://www.w3.org/2000/svg"
+          xml:space="preserve"
+          width="100%"
+          height="100%"
+          version="1.1"
+          shape-rendering="geometricPrecision"
+          text-rendering="geometricPrecision"
+          image-rendering="optimizeQuality"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          viewBox="0 0 784.37 1277.39"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
 
-          <path
-            d="M50 12L87 79H13L50 12Z"
-            fill="none"
-            stroke="#bd9f67"
-            stroke-width="5"
-            stroke-linejoin="round"
-          />
+          <g>
 
-          <line
-            x1="50"
-            y1="34"
-            x2="50"
-            y2="56"
-            stroke="#e0d0b5"
-            stroke-width="6"
-            stroke-linecap="round"
-          />
+            <polygon
+              fill="#343434"
+              points="
+                392.07,0
+                383.5,29.11
+                383.5,873.74
+                392.07,882.29
+                784.13,650.54
+              "
+            />
 
-          <circle
-            cx="50"
-            cy="67"
-            r="3.5"
-            fill="#e0d0b5"
-          />
+            <polygon
+              fill="#8C8C8C"
+              points="
+                392.07,0
+                -0,650.54
+                392.07,882.29
+                392.07,472.33
+              "
+            />
+
+            <polygon
+              fill="#3C3C3B"
+              points="
+                392.07,956.52
+                387.24,962.41
+                387.24,1263.28
+                392.07,1277.38
+                784.37,724.89
+              "
+            />
+
+            <polygon
+              fill="#8C8C8C"
+              points="
+                392.07,1277.38
+                392.07,956.52
+                -0,724.89
+              "
+            />
+
+            <polygon
+              fill="#141414"
+              points="
+                392.07,882.29
+                784.13,650.54
+                392.07,472.33
+              "
+            />
+
+            <polygon
+              fill="#393939"
+              points="
+                0,650.54
+                392.07,882.29
+                392.07,472.33
+              "
+            />
+
+          </g>
 
         </svg>
 
@@ -1275,7 +1437,9 @@ button:active {
 
 
 
-      <!-- RULES -->
+      <!-- =================================================
+           RULES
+           ================================================= -->
 
       <a
         class="hub-card"
@@ -1283,57 +1447,86 @@ button:active {
         href="#"
       >
 
+        <!-- ORIGINAL UIVERSE SVG -->
+
         <svg
           class="card-icon"
-          viewBox="0 0 100 100"
           xmlns="http://www.w3.org/2000/svg"
+          xml:space="preserve"
+          width="100%"
+          height="100%"
+          version="1.1"
+          shape-rendering="geometricPrecision"
+          text-rendering="geometricPrecision"
+          image-rendering="optimizeQuality"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          viewBox="0 0 784.37 1277.39"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
 
-          <path
-            d="M25 17H65L77 29V83H25V17Z"
-            fill="none"
-            stroke="#bd9f67"
-            stroke-width="5"
-            stroke-linejoin="round"
-          />
+          <g>
 
-          <path
-            d="M65 17V30H77"
-            fill="none"
-            stroke="#e0d0b5"
-            stroke-width="5"
-            stroke-linejoin="round"
-          />
+            <polygon
+              fill="#343434"
+              points="
+                392.07,0
+                383.5,29.11
+                383.5,873.74
+                392.07,882.29
+                784.13,650.54
+              "
+            />
 
-          <line
-            x1="35"
-            y1="43"
-            x2="67"
-            y2="43"
-            stroke="#e0d0b5"
-            stroke-width="4"
-            stroke-linecap="round"
-          />
+            <polygon
+              fill="#8C8C8C"
+              points="
+                392.07,0
+                -0,650.54
+                392.07,882.29
+                392.07,472.33
+              "
+            />
 
-          <line
-            x1="35"
-            y1="55"
-            x2="67"
-            y2="55"
-            stroke="#e0d0b5"
-            stroke-width="4"
-            stroke-linecap="round"
-          />
+            <polygon
+              fill="#3C3C3B"
+              points="
+                392.07,956.52
+                387.24,962.41
+                387.24,1263.28
+                392.07,1277.38
+                784.37,724.89
+              "
+            />
 
-          <line
-            x1="35"
-            y1="67"
-            x2="58"
-            y2="67"
-            stroke="#e0d0b5"
-            stroke-width="4"
-            stroke-linecap="round"
-          />
+            <polygon
+              fill="#8C8C8C"
+              points="
+                392.07,1277.38
+                392.07,956.52
+                -0,724.89
+              "
+            />
+
+            <polygon
+              fill="#141414"
+              points="
+                392.07,882.29
+                784.13,650.54
+                392.07,472.33
+              "
+            />
+
+            <polygon
+              fill="#393939"
+              points="
+                0,650.54
+                392.07,882.29
+                392.07,472.33
+              "
+            />
+
+          </g>
 
         </svg>
 
@@ -1354,7 +1547,9 @@ button:active {
 
 
 
-      <!-- CHANGELOG -->
+      <!-- =================================================
+           CHANGELOG
+           ================================================= -->
 
       <a
         class="hub-card"
@@ -1362,46 +1557,86 @@ button:active {
         href="#"
       >
 
+        <!-- ORIGINAL UIVERSE SVG -->
+
         <svg
           class="card-icon"
-          viewBox="0 0 100 100"
           xmlns="http://www.w3.org/2000/svg"
+          xml:space="preserve"
+          width="100%"
+          height="100%"
+          version="1.1"
+          shape-rendering="geometricPrecision"
+          text-rendering="geometricPrecision"
+          image-rendering="optimizeQuality"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          viewBox="0 0 784.37 1277.39"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
 
-          <path
-            d="M25 17H65L77 29V83H25V17Z"
-            fill="none"
-            stroke="#bd9f67"
-            stroke-width="5"
-            stroke-linejoin="round"
-          />
+          <g>
 
-          <path
-            d="M65 17V30H77"
-            fill="none"
-            stroke="#e0d0b5"
-            stroke-width="5"
-            stroke-linejoin="round"
-          />
+            <polygon
+              fill="#343434"
+              points="
+                392.07,0
+                383.5,29.11
+                383.5,873.74
+                392.07,882.29
+                784.13,650.54
+              "
+            />
 
-          <path
-            d="M35 48L42 55L56 40"
-            fill="none"
-            stroke="#bd9f67"
-            stroke-width="5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+            <polygon
+              fill="#8C8C8C"
+              points="
+                392.07,0
+                -0,650.54
+                392.07,882.29
+                392.07,472.33
+              "
+            />
 
-          <line
-            x1="35"
-            y1="67"
-            x2="67"
-            y2="67"
-            stroke="#e0d0b5"
-            stroke-width="4"
-            stroke-linecap="round"
-          />
+            <polygon
+              fill="#3C3C3B"
+              points="
+                392.07,956.52
+                387.24,962.41
+                387.24,1263.28
+                392.07,1277.38
+                784.37,724.89
+              "
+            />
+
+            <polygon
+              fill="#8C8C8C"
+              points="
+                392.07,1277.38
+                392.07,956.52
+                -0,724.89
+              "
+            />
+
+            <polygon
+              fill="#141414"
+              points="
+                392.07,882.29
+                784.13,650.54
+                392.07,472.33
+              "
+            />
+
+            <polygon
+              fill="#393939"
+              points="
+                0,650.54
+                392.07,882.29
+                392.07,472.33
+              "
+            />
+
+          </g>
 
         </svg>
 
@@ -1419,6 +1654,7 @@ button:active {
         </div>
 
       </a>
+
 
     </nav>
 
@@ -1517,6 +1753,7 @@ function start() {
     );
 
     return;
+
   }
 
 
@@ -1676,6 +1913,7 @@ function updateLevel() {
     );
 
     return;
+
   }
 
 
@@ -1689,7 +1927,6 @@ function updateLevel() {
 
 
   hideLevelEdit();
-
 
   showHub();
 
