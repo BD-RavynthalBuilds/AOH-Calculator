@@ -349,7 +349,6 @@ function renderClans() {
     return `
       <div class="clan-card" onclick="openClan('${clan.id}')">
         <span class="remove-x" onclick="event.stopPropagation(); removeClan('${clan.id}')" title="Delete clan">✕</span>
-        <span class="clan-icon">🛡️</span>
         <span class="clan-name">${escapeHtml(clan.name)}</span>
         ${clan.tag ? `<span class="clan-tag">[${escapeHtml(clan.tag)}]</span>` : ``}
         <span class="clan-meta">${clan.members.length} member${clan.members.length===1?'':'s'}${owners ? ' · ' + owners + ' leadership' : ''}</span>
