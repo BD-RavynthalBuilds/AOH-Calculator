@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clan - Age of Heroes Helper</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Luxury Animated Background */
+.container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 30%, #1a2226 0%, #0d1113 70%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  padding: 40px 20px;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: radial-gradient(#bd9f67 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.04;
+  animation: backgroundShift 180s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes backgroundShift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-50%, -50%); }
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  text-align: center;
+  background: #243137;
+  padding: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(189, 159, 103, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 920px;
+  margin: auto;
+}
+
+h1 {
+  color: #bd9f67;
+  font-size: 2.2rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+  color: #bd9f67;
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+p.sub {
+  color: #a49683;
+  font-size: 0.9rem;
+  margin-top: -14px;
+}
+
+label {
+  color: #e0d0b5;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+
+input[type="text"], input[type="number"], input[type="date"], select {
+  background: #1a2226;
+  border: 1px solid rgba(189, 159, 103, 0.4);
+  border-radius: 4px;
+  padding: 10px 14px;
+  color: #e0d0b5;
+  font-size: 0.95rem;
+  text-align: center;
+  outline: none;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus {
+  border-color: #bd9f67;
+  box-shadow: 0 0 10px rgba(189, 159, 103, 0.3);
+}
+
+input[type="checkbox"] {
+  accent-color: #bd9f67;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+select option { background: #1a2226; color: #e0d0b5; }
+
+/* ==========================================================================
+   Global Button Upgrade - Universal Conic Aura Matrix
+   ========================================================================== */
+button {
+  position: relative;
+  display: inline-block;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: bold;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer;
+  border-radius: 50px !important;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  z-index: 1;
+  text-decoration: none;
+}
+
+button:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 20px rgba(189, 159, 103, 0.3);
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    #bd9f67 0%,
+    #e0d0b5 25%,
+    #9c8252 50%,
+    #f3e8d5 75%,
+    #bd9f67 100%
+  );
+  z-index: -2;
+  filter: blur(4px);
+  transform: rotate(0deg);
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+button:hover::before {
+  transform: rotate(180deg);
+}
+
+button::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: #1a2226;
+  border-radius: 48px;
+  z-index: -1;
+  transition: background 0.4s ease;
+}
+
+button:hover::after {
+  background: rgba(189, 159, 103, 0.08);
+}
+
+button span {
+  display: block;
+  position: relative;
+  z-index: 2;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #e0d0b5;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+button:hover span {
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button.small { padding: 8px 16px; font-size: 12px; }
+button.danger::after { background: rgba(180, 70, 70, 0.15); }
+button.danger span { color: #e6b0b0; }
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.section {
+  width: 100%;
+  background: #1a2226;
+  border: 1px solid rgba(189, 159, 103, 0.15);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.clan-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.clan-tag-badge {
+  color: #a49683;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+#memberForm {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #e0d0b5;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+th, td {
+  padding: 10px 8px;
+  border-bottom: 1px solid rgba(189, 159, 103, 0.1);
+}
+
+th {
+  background: rgba(189, 159, 103, 0.15);
+  color: #bd9f67;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+}
+
+tr:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
+tr:nth-child(odd) { background: rgba(0, 0, 0, 0.1); }
+tr:hover { background: rgba(189, 159, 103, 0.05); }
+
+.role-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.role-owner { background: rgba(189,159,103,0.25); color: #f3e8d5; }
+.role-co-owner { background: rgba(189,159,103,0.15); color: #bd9f67; }
+.role-member { background: rgba(255,255,255,0.06); color: #a49683; }
+
+.table-wrap {
+  width: 100%;
+  max-height: 420px;
+  overflow-y: auto;
+  border-radius: 6px;
+}
+
+.empty-msg {
+  padding: 20px;
+  color: rgba(189, 159, 103, 0.4);
+  font-style: italic;
+}
+
+.lock-msg {
+  color: #a49683;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.access-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.sheet-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.history-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.history-chip {
+  background: rgba(189,159,103,0.08);
+  border: 1px solid rgba(189,159,103,0.25);
+  color: #e0d0b5;
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.history-chip:hover { background: rgba(189,159,103,0.2); }
+.history-chip.active { background: #bd9f67; color: #1a2226; font-weight: bold; }
+
+.badge-locked {
+  color: #a49683;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+footer {
+  margin-top: 6px;
+  font-size: 0.85rem;
+}
+
+a {
+  color: #bd9f67;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+a:hover {
+  color: #e0d0b5;
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .content { padding: 20px 14px; }
+  h1 { font-size: 1.6rem; letter-spacing: 1px; }
+  .button-group { flex-direction: column; align-items: center; }
+  #memberForm { flex-direction: column; align-items: stretch; }
+  #memberForm input, #memberForm select { width: 100%; }
+  th, td { font-size: 0.78rem; padding: 8px 5px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="content">
+
+    <div class="clan-header">
+      <h1 id="clanNameHeading">Clan</h1>
+      <span class="clan-tag-badge" id="clanTagBadge"></span>
+    </div>
+
+    <!-- Members section -->
+    <div class="section">
+      <h2>Members</h2>
+
+      <div id="memberForm">
+        <input type="text" id="memberName" placeholder="Member name" maxlength="30" style="width:160px;">
+        <input type="number" id="memberLevel" placeholder="Level" min="1" style="width:100px;">
+        <select id="memberRole">
+          <option value="member">Member</option>
+          <option value="co-owner">Co-Owner</option>
+          <option value="owner">Owner</option>
+        </select>
+        <button class="small" onclick="saveMember()"><span id="memberFormBtnLabel">Add Member</span></button>
+        <button class="small" id="cancelEditBtn" style="display:none;" onclick="cancelEditMember()"><span>Cancel</span></button>
+      </div>
+
+      <div class="table-wrap">
+        <table id="membersTable">
+          <thead>
+            <tr><th>Name</th><th>Level</th><th>Role</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="membersTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Leadership access gate -->
+    <div class="section">
+      <h2>Leadership Tools</h2>
+      <p class="lock-msg">Leveling sheets can only be created by a member with the Owner or Co-Owner role. Select who you are to unlock them for this session.</p>
+      <div class="access-row">
+        <select id="actingAsSelect">
+          <option value="">-- Select your member --</option>
+        </select>
+        <button class="small" onclick="unlockLeadership()"><span>Unlock</span></button>
+        <span class="badge-locked" id="lockStatus">🔒 Locked</span>
+      </div>
+    </div>
+
+    <!-- Leveling sheet section -->
+    <div class="section" id="sheetSection" style="display:none;">
+      <h2>Leveling Sheet</h2>
+      <p class="lock-msg">Daily target is auto-calculated from each member's level. Check off members who leveled up today, then save.</p>
+
+      <div class="sheet-controls">
+        <label for="sheetDate">Date:</label>
+        <input type="date" id="sheetDate">
+        <button class="small" onclick="loadSheetForDate()"><span>Load</span></button>
+        <button class="small" onclick="saveSheet()"><span>Save Sheet</span></button>
+      </div>
+
+      <div class="table-wrap">
+        <table id="sheetTable">
+          <thead>
+            <tr><th>Name</th><th>Level</th><th>Role</th><th>Daily Limit</th><th>Leveled Today</th></tr>
+          </thead>
+          <tbody id="sheetTableBody"></tbody>
+        </table>
+      </div>
+
+      <div style="width:100%;">
+        <h2 style="font-size:1rem; margin-top:6px;">History</h2>
+        <div class="history-chips" id="historyChips"></div>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button onclick="goBack()"><span>Back to Clans</span></button>
+    </div>
+
+    <footer>
+      <a href="#" id="changelogLink">Changelog</a>
+    </footer>
+  </div>
+</div>
+
+<script>
+const CLANS_KEY = "aoh_clans";
+
+function getLevelFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const lvl = Number(params.get("level"));
+  return (lvl && lvl > 0) ? lvl : null;
+}
+let playerLevel = getLevelFromURL();
+if (!playerLevel) {
+  const stored = localStorage.getItem("aoh_player_level");
+  playerLevel = stored ? Number(stored) : 1;
+}
+
+function getClanIdFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("clan");
+}
+const clanId = getClanIdFromURL();
+
+function loadClans() {
+  try {
+    const raw = localStorage.getItem(CLANS_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) {
+    return [];
+  }
+}
+function saveClans(clans) {
+  localStorage.setItem(CLANS_KEY, JSON.stringify(clans));
+}
+function makeId(prefix) {
+  return prefix + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+}
+function escapeHtml(str) {
+  const div = document.createElement("div");
+  div.textContent = str == null ? "" : String(str);
+  return div.innerHTML;
+}
+
+let clans = loadClans();
+let clan = clans.find(c => c.id === clanId);
+
+if (!clan) {
+  alert("Clan not found.");
+  window.location.href = "clans.html?level=" + playerLevel;
+}
+if (!clan.sheets) clan.sheets = {};
+
+document.getElementById("clanNameHeading").textContent = clan.name;
+document.getElementById("clanTagBadge").textContent = clan.tag ? "[" + clan.tag + "]" : "";
+
+function persist() {
+  const idx = clans.findIndex(c => c.id === clanId);
+  clans[idx] = clan;
+  saveClans(clans);
+}
+
+/* ---------------- Members ---------------- */
+
+let editingMemberId = null;
+
+function roleLabel(role) {
+  if (role === "owner") return "Owner";
+  if (role === "co-owner") return "Co-Owner";
+  return "Member";
+}
+function roleClass(role) {
+  if (role === "owner") return "role-owner";
+  if (role === "co-owner") return "role-co-owner";
+  return "role-member";
+}
+
+function renderMembers() {
+  const tbody = document.getElementById("membersTableBody");
+  if (clan.members.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="4" class="empty-msg">No members yet. Add one above.</td></tr>`;
+  } else {
+    const sorted = [...clan.members].sort((a,b) => b.level - a.level);
+    tbody.innerHTML = sorted.map(m => `
+      <tr>
+        <td>${escapeHtml(m.name)}</td>
+        <td>${m.level}</td>
+        <td><span class="role-badge ${roleClass(m.role)}">${roleLabel(m.role)}</span></td>
+        <td>
+          <button class="small" onclick="editMember('${m.id}')"><span>Edit</span></button>
+          <button class="small danger" onclick="removeMember('${m.id}')"><span>Remove</span></button>
+        </td>
+      </tr>
+    `).join("");
+  }
+  renderActingAsOptions();
+}
+
+function saveMember() {
+  const nameInput = document.getElementById("memberName");
+  const levelInput = document.getElementById("memberLevel");
+  const roleInput = document.getElementById("memberRole");
+
+  const name = nameInput.value.trim();
+  const level = Number(levelInput.value);
+  const role = roleInput.value;
+
+  if (!name) { alert("Enter a member name."); return; }
+  if (!level || level <= 0) { alert("Enter a valid level."); return; }
+
+  if (editingMemberId) {
+    const m = clan.members.find(mm => mm.id === editingMemberId);
+    if (m) { m.name = name; m.level = level; m.role = role; }
+  } else {
+    clan.members.push({ id: makeId("mem"), name, level, role });
+  }
+
+  persist();
+  cancelEditMember();
+  renderMembers();
+}
+
+function editMember(id) {
+  const m = clan.members.find(mm => mm.id === id);
+  if (!m) return;
+  editingMemberId = id;
+  document.getElementById("memberName").value = m.name;
+  document.getElementById("memberLevel").value = m.level;
+  document.getElementById("memberRole").value = m.role;
+  document.getElementById("memberFormBtnLabel").textContent = "Update Member";
+  document.getElementById("cancelEditBtn").style.display = "inline-block";
+}
+
+function cancelEditMember() {
+  editingMemberId = null;
+  document.getElementById("memberName").value = "";
+  document.getElementById("memberLevel").value = "";
+  document.getElementById("memberRole").value = "member";
+  document.getElementById("memberFormBtnLabel").textContent = "Add Member";
+  document.getElementById("cancelEditBtn").style.display = "none";
+}
+
+function removeMember(id) {
+  const m = clan.members.find(mm => mm.id === id);
+  if (!m) return;
+  if (!confirm(`Remove ${m.name} from the clan?`)) return;
+  clan.members = clan.members.filter(mm => mm.id !== id);
+  persist();
+  renderMembers();
+}
+
+/* ---------------- Leadership access (session-only, manual/trust-based for now) ---------------- */
+
+function renderActingAsOptions() {
+  const sel = document.getElementById("actingAsSelect");
+  const current = sel.value;
+  sel.innerHTML = `<option value="">-- Select your member --</option>` +
+    clan.members.map(m => `<option value="${m.id}">${escapeHtml(m.name)} (${roleLabel(m.role)})</option>`).join("");
+  if (current) sel.value = current;
+}
+
+function leadershipKey() {
+  return "aoh_clan_leader_" + clanId;
+}
+
+function unlockLeadership() {
+  const sel = document.getElementById("actingAsSelect");
+  const memberId = sel.value;
+  if (!memberId) { alert("Select which member you are first."); return; }
+  const m = clan.members.find(mm => mm.id === memberId);
+  if (!m || (m.role !== "owner" && m.role !== "co-owner")) {
+    alert("Only the Owner or a Co-Owner can access leveling sheet tools.");
+    return;
+  }
+  sessionStorage.setItem(leadershipKey(), memberId);
+  applyLeadershipState();
+}
+
+function applyLeadershipState() {
+  const memberId = sessionStorage.getItem(leadershipKey());
+  const m = memberId ? clan.members.find(mm => mm.id === memberId) : null;
+  const unlocked = m && (m.role === "owner" || m.role === "co-owner");
+
+  document.getElementById("lockStatus").textContent = unlocked
+    ? "🔓 Unlocked as " + m.name
+    : "🔒 Locked";
+  document.getElementById("sheetSection").style.display = unlocked ? "flex" : "none";
+
+  if (unlocked) {
+    initSheetControls();
+  }
+}
+
+/* ---------------- Leveling Sheet ---------------- */
+
+function getDailyLimit(level){
+    if(level < 1000) return 999;
+    if(level < 2000) return 120;
+    if(level < 3000) return 88;
+    if(level < 4000) return 82;
+    if(level < 5000) return 74;
+    if(level < 6000) return 69;
+    if(level < 7000) return 62;
+    if(level < 8000) return 54;
+    if(level < 9000) return 46;
+    if(level < 10000) return 40;
+    if(level < 10500) return 34;
+    if(level < 11000) return 30;
+    if(level < 12000) return 26;
+    if(level < 13000) return 23;
+    if(level < 14000) return 21;
+    if(level < 15000) return 18;
+    if(level < 16000) return 14;
+    if(level < 17000) return 11;
+    if(level < 18000) return 7;
+    if(level < 19000) return 4;
+    if(level < 20000) return 2;
+    return 1;
+}
+
+function todayStr() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,"0");
+  const day = String(d.getDate()).padStart(2,"0");
+  return `${y}-${m}-${day}`;
+}
+
+let sheetInitDone = false;
+
+function initSheetControls() {
+  const dateInput = document.getElementById("sheetDate");
+  if (!sheetInitDone) {
+    dateInput.value = todayStr();
+    sheetInitDone = true;
+  }
+  renderSheetTable(dateInput.value);
+  renderHistory();
+}
+
+function renderSheetTable(dateStr) {
+  const tbody = document.getElementById("sheetTableBody");
+  if (clan.members.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" class="empty-msg">Add members first.</td></tr>`;
+    return;
+  }
+  const existing = clan.sheets[dateStr];
+  const sorted = [...clan.members].sort((a,b) => b.level - a.level);
+
+  tbody.innerHTML = sorted.map(m => {
+    const entry = existing && existing.entries ? existing.entries[m.id] : null;
+    const checked = entry && entry.leveled ? "checked" : "";
+    return `
+      <tr>
+        <td>${escapeHtml(m.name)}</td>
+        <td>${m.level}</td>
+        <td><span class="role-badge ${roleClass(m.role)}">${roleLabel(m.role)}</span></td>
+        <td>${getDailyLimit(m.level)}</td>
+        <td><input type="checkbox" data-member-id="${m.id}" ${checked}></td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function loadSheetForDate() {
+  const dateStr = document.getElementById("sheetDate").value;
+  if (!dateStr) { alert("Choose a date."); return; }
+  renderSheetTable(dateStr);
+  renderHistory();
+}
+
+function saveSheet() {
+  const dateStr = document.getElementById("sheetDate").value;
+  if (!dateStr) { alert("Choose a date."); return; }
+
+  const checkboxes = document.querySelectorAll('#sheetTableBody input[type="checkbox"]');
+  const entries = {};
+  checkboxes.forEach(cb => {
+    entries[cb.getAttribute("data-member-id")] = { leveled: cb.checked };
+  });
+
+  clan.sheets[dateStr] = { entries, savedAt: new Date().toISOString() };
+  persist();
+  renderHistory();
+  alert("Leveling sheet saved for " + dateStr + ".");
+}
+
+function renderHistory() {
+  const wrap = document.getElementById("historyChips");
+  const dates = Object.keys(clan.sheets).sort((a,b) => b.localeCompare(a));
+  const activeDate = document.getElementById("sheetDate").value;
+
+  if (dates.length === 0) {
+    wrap.innerHTML = `<span class="lock-msg">No saved sheets yet.</span>`;
+    return;
+  }
+
+  wrap.innerHTML = dates.map(d => {
+    const entries = clan.sheets[d].entries || {};
+    const leveledCount = Object.values(entries).filter(e => e.leveled).length;
+    const total = clan.members.length;
+    const active = d === activeDate ? "active" : "";
+    return `<span class="history-chip ${active}" onclick="selectHistoryDate('${d}')">${d} · ${leveledCount}/${total}</span>`;
+  }).join("");
+}
+
+function selectHistoryDate(dateStr) {
+  document.getElementById("sheetDate").value = dateStr;
+  renderSheetTable(dateStr);
+  renderHistory();
+}
+
+function goBack() {
+  window.location.href = "clans.html?level=" + playerLevel;
+}
+
+document.getElementById("changelogLink").href = "changelog.html?level=" + playerLevel;
+
+/* Init */
+renderMembers();
+applyLeadershipState();
+</script>
+</body>
+</html>

@@ -325,7 +325,7 @@ a:hover {
     </div>
 
     <footer>
-      <a href="credits.html">Credits &amp; License</a> · <a href="changelog.html?level=" + playerLevel + "">Changelog</a>
+      <a href="credits.html">Credits &amp; License</a> · <a href="#" id="changelogLink">Changelog</a>
     </footer>
   </div>
 </div>
@@ -342,6 +342,20 @@ if (!playerLevel) {
 }
 
 let tableData = [];
+
+// XP required to go from level L to level L+1
+function xpForLevel(L) {
+    return 12 * Math.pow(L, 1.5);
+}
+
+// Total XP required to go from level `start` to level `end` (end > start)
+function xpForRange(start, end) {
+    let total = 0;
+    for (let L = start; L < end; L++) {
+        total += xpForLevel(L);
+    }
+    return total;
+}
 
 function getDailyLimit(level) {
     if(level <= 999) return 999;
@@ -423,21 +437,24 @@ function planLevels(){
     }
 
     let lvl = playerLevel;
+    let xpTotal = 0;
     tableData = [];
 
-    let html = `<table><tr><th>Day</th><th>Date</th><th>Start Level</th><th>Daily Limit</th><th>End Level</th></tr>`;
+    let html = `<table><tr><th>Day</th><th>Date</th><th>Start Level</th><th>Daily Limit</th><th>End Level</th><th>XP Gained</th><th>Total XP</th></tr>`;
     
     for(let i=1; i<=days; i++){
         const daily = getDailyLimit(lvl);
         const start = lvl;
         const end = lvl + daily;
+        const xpGained = xpForRange(start, end);
+        xpTotal += xpGained;
 
         let currentDate = new Date(startDate);
         currentDate.setDate(startDate.getDate() + i - 1);
         const dateStr = formatDate(currentDate, includeYear);
 
-        html += `<tr><td>${i}</td><td>${dateStr}</td><td>${start}</td><td>+${daily}</td><td>${end}</td></tr>`;
-        tableData.push([i, dateStr, start, daily, end]);
+        html += `<tr><td>${i}</td><td>${dateStr}</td><td>${start}</td><td>+${daily}</td><td>${end}</td><td>${Math.round(xpGained).toLocaleString()}</td><td>${Math.round(xpTotal).toLocaleString()}</td></tr>`;
+        tableData.push([i, dateStr, start, daily, end, Math.round(xpGained), Math.round(xpTotal)]);
         lvl = end;
         if(benchmark && lvl >= benchmark) break;
     }
@@ -449,7 +466,7 @@ function planLevels(){
 
 function downloadCSV() {
     if(tableData.length === 0){ alert("Generate the plan first."); return; }
-    let csvContent = "data:text/csv;charset=utf-8,Day,Date,Start Level,Daily Limit,End Level\n";
+    let csvContent = "data:text/csv;charset=utf-8,Day,Date,Start Level,Daily Limit,End Level,XP Gained,Total XP\n";
     tableData.forEach(row => { csvContent += row.join(",") + "\n"; });
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
@@ -471,12 +488,14 @@ function importCSV(){
             const text = evt.target.result;
             const lines = text.split("\n").slice(1); 
             tableData = [];
-            let html = `<table><tr><th>Day</th><th>Date</th><th>Start Level</th><th>Daily Limit</th><th>End Level</th></tr>`;
+            let html = `<table><tr><th>Day</th><th>Date</th><th>Start Level</th><th>Daily Limit</th><th>End Level</th><th>XP Gained</th><th>Total XP</th></tr>`;
             for(let line of lines){
                 if(line.trim()==="") continue;
-                const [day, dateStr, start, daily, end] = line.split(",");
-                html += `<tr><td>${day}</td><td>${dateStr}</td><td>${start}</td><td>+${daily}</td><td>${end}</td></tr>`;
-                tableData.push([Number(day), dateStr, Number(start), Number(daily), Number(end)]);
+                const [day, dateStr, start, daily, end, xpGained, xpTotal] = line.split(",");
+                const xpG = xpGained !== undefined ? Number(xpGained) : xpForRange(Number(start), Number(end));
+                const xpT = xpTotal !== undefined ? Number(xpTotal) : xpG;
+                html += `<tr><td>${day}</td><td>${dateStr}</td><td>${start}</td><td>+${daily}</td><td>${end}</td><td>${xpG.toLocaleString()}</td><td>${xpT.toLocaleString()}</td></tr>`;
+                tableData.push([Number(day), dateStr, Number(start), Number(daily), Number(end), xpG, xpT]);
             }
             html += `</table>`;
             document.getElementById("planResult").innerHTML = html;

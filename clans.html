@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clans - Age of Heroes Helper</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Luxury Animated Background */
+.container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 30%, #1a2226 0%, #0d1113 70%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  padding: 40px 20px;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: radial-gradient(#bd9f67 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.04;
+  animation: backgroundShift 180s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes backgroundShift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-50%, -50%); }
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  text-align: center;
+  background: #243137;
+  padding: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(189, 159, 103, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}
+
+h1 {
+  color: #bd9f67;
+  font-size: 2.2rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+p.sub {
+  color: #a49683;
+  font-size: 0.9rem;
+  margin-top: -14px;
+}
+
+label {
+  color: #e0d0b5;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+
+input[type="text"], input[type="number"] {
+  background: #1a2226;
+  border: 1px solid rgba(189, 159, 103, 0.4);
+  border-radius: 4px;
+  padding: 10px 14px;
+  color: #e0d0b5;
+  font-size: 1rem;
+  text-align: center;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+  border-color: #bd9f67;
+  box-shadow: 0 0 10px rgba(189, 159, 103, 0.3);
+}
+
+/* ==========================================================================
+   Global Button Upgrade - Universal Conic Aura Matrix
+   ========================================================================== */
+button {
+  position: relative;
+  display: inline-block;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: bold;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer;
+  border-radius: 50px !important;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  z-index: 1;
+  text-decoration: none;
+}
+
+button:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 20px rgba(189, 159, 103, 0.3);
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    #bd9f67 0%,
+    #e0d0b5 25%,
+    #9c8252 50%,
+    #f3e8d5 75%,
+    #bd9f67 100%
+  );
+  z-index: -2;
+  filter: blur(4px);
+  transform: rotate(0deg);
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+button:hover::before {
+  transform: rotate(180deg);
+}
+
+button::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: #1a2226;
+  border-radius: 48px;
+  z-index: -1;
+  transition: background 0.4s ease;
+}
+
+button:hover::after {
+  background: rgba(189, 159, 103, 0.08);
+}
+
+button span {
+  display: block;
+  position: relative;
+  z-index: 2;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #e0d0b5;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+button:hover span {
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.icon-btn {
+  padding: 6px 10px !important;
+  font-size: 11px !important;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+#createForm {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 18px;
+  background: #1a2226;
+  border: 1px solid rgba(189, 159, 103, 0.15);
+  border-radius: 8px;
+}
+
+/* Clan grid */
+.clan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  width: 100%;
+}
+
+.clan-card {
+  position: relative;
+  background: #1a2226;
+  border: 1px solid rgba(189,159,103,0.15);
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 18px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.clan-card:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+  border-color: rgba(189,159,103,0.4);
+}
+
+.clan-card .clan-icon { font-size: 1.8rem; }
+.clan-card .clan-name { color: #bd9f67; font-size: 1rem; font-weight: bold; letter-spacing: 0.5px; }
+.clan-card .clan-tag { color: #a49683; font-size: 0.75rem; }
+.clan-card .clan-meta { color: #a49683; font-size: 0.72rem; margin-top: 4px; }
+
+.clan-card .remove-x {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  color: rgba(189,159,103,0.4);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.clan-card .remove-x:hover { color: #d97575; }
+
+.empty-msg {
+  padding: 30px;
+  color: rgba(189, 159, 103, 0.4);
+  font-style: italic;
+}
+
+footer {
+  margin-top: 6px;
+  font-size: 0.85rem;
+}
+
+a {
+  color: #bd9f67;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #e0d0b5;
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .content { padding: 20px 14px; }
+  h1 { font-size: 1.7rem; letter-spacing: 1px; }
+  .button-group { flex-direction: column; align-items: center; }
+  #createForm { flex-direction: column; align-items: stretch; }
+  #createForm input { width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="content">
+    <h1>Clans</h1>
+    <p class="sub">Create a clan, then click it to manage members and levels.</p>
+
+    <div id="createForm">
+      <input type="text" id="newClanName" placeholder="Clan name" maxlength="40" style="width:200px;">
+      <input type="text" id="newClanTag" placeholder="Tag (optional)" maxlength="10" style="width:120px;">
+      <button onclick="createClan()"><span>Add Clan</span></button>
+    </div>
+
+    <div class="clan-grid" id="clanGrid"></div>
+
+    <div class="button-group">
+      <button onclick="goBack()"><span>Back</span></button>
+    </div>
+
+    <footer>
+      <a href="#" id="changelogLink">Changelog</a>
+    </footer>
+  </div>
+</div>
+
+<script>
+const CLANS_KEY = "aoh_clans";
+
+function getLevelFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const lvl = Number(params.get("level"));
+  return (lvl && lvl > 0) ? lvl : null;
+}
+let playerLevel = getLevelFromURL();
+if (!playerLevel) {
+  const stored = localStorage.getItem("aoh_player_level");
+  playerLevel = stored ? Number(stored) : 1;
+}
+
+function loadClans() {
+  try {
+    const raw = localStorage.getItem(CLANS_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) {
+    return [];
+  }
+}
+
+function saveClans(clans) {
+  localStorage.setItem(CLANS_KEY, JSON.stringify(clans));
+}
+
+function makeId(prefix) {
+  return prefix + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+}
+
+function renderClans() {
+  const clans = loadClans();
+  const grid = document.getElementById("clanGrid");
+
+  if (clans.length === 0) {
+    grid.innerHTML = `<div class="empty-msg" style="grid-column: 1 / -1;">No clans yet. Add one above to get started.</div>`;
+    return;
+  }
+
+  grid.innerHTML = clans.map(clan => {
+    const owners = clan.members.filter(m => m.role === "owner" || m.role === "co-owner").length;
+    return `
+      <div class="clan-card" onclick="openClan('${clan.id}')">
+        <span class="remove-x" onclick="event.stopPropagation(); removeClan('${clan.id}')" title="Delete clan">✕</span>
+        <span class="clan-icon">🛡️</span>
+        <span class="clan-name">${escapeHtml(clan.name)}</span>
+        ${clan.tag ? `<span class="clan-tag">[${escapeHtml(clan.tag)}]</span>` : ``}
+        <span class="clan-meta">${clan.members.length} member${clan.members.length===1?'':'s'}${owners ? ' · ' + owners + ' leadership' : ''}</span>
+      </div>
+    `;
+  }).join("");
+}
+
+function escapeHtml(str) {
+  const div = document.createElement("div");
+  div.textContent = str == null ? "" : String(str);
+  return div.innerHTML;
+}
+
+function createClan() {
+  const nameInput = document.getElementById("newClanName");
+  const tagInput = document.getElementById("newClanTag");
+  const name = nameInput.value.trim();
+  const tag = tagInput.value.trim();
+
+  if (!name) {
+    alert("Enter a clan name.");
+    return;
+  }
+
+  const clans = loadClans();
+  if (clans.some(c => c.name.toLowerCase() === name.toLowerCase())) {
+    alert("A clan with that name already exists.");
+    return;
+  }
+
+  clans.push({
+    id: makeId("clan"),
+    name: name,
+    tag: tag,
+    members: [],
+    sheets: {}
+  });
+  saveClans(clans);
+  nameInput.value = "";
+  tagInput.value = "";
+  renderClans();
+}
+
+function removeClan(id) {
+  const clans = loadClans();
+  const clan = clans.find(c => c.id === id);
+  if (!clan) return;
+  if (!confirm(`Delete clan "${clan.name}"? This removes all its members and leveling sheets.`)) return;
+  saveClans(clans.filter(c => c.id !== id));
+  renderClans();
+}
+
+function openClan(id) {
+  window.location.href = "clan_detail.html?level=" + playerLevel + "&clan=" + encodeURIComponent(id);
+}
+
+function goBack() {
+  window.location.href = "welcome_main.html?level=" + playerLevel;
+}
+
+document.getElementById("changelogLink").href = "changelog.html?level=" + playerLevel;
+
+renderClans();
+</script>
+</body>
+</html>
