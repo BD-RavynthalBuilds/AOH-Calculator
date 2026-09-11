@@ -453,6 +453,7 @@ a:hover {
 
 <script>
 const CLANS_KEY = "aoh_clans";
+const ADMIN_PASSWORD = "AOH101";
 
 function getLevelFromURL() {
   const params = new URLSearchParams(window.location.search);
@@ -556,6 +557,14 @@ function saveMember() {
 
   if (!name) { alert("Enter a member name."); return; }
   if (!level || level <= 0) { alert("Enter a valid level."); return; }
+
+  if (role === "owner") {
+    const pass = prompt("Assigning the Owner role requires the admin password:");
+    if (pass !== ADMIN_PASSWORD) {
+      alert("Incorrect admin password. Owner role was not assigned.");
+      return;
+    }
+  }
 
   if (editingMemberId) {
     const m = clan.members.find(mm => mm.id === editingMemberId);
