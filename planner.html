@@ -262,6 +262,18 @@ tr:hover { background: rgba(189, 159, 103, 0.05); }
 footer {
   margin-top: 20px;
   font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
 }
 
 a {
@@ -324,10 +336,13 @@ a:hover {
     </div>
 
     <footer>
-      <a href="credits.html">Credits &amp; License</a>
-      <button onclick="goBack()" class="back-btn"><span>Back</span></button>
-      <a href="#" id="changelogLink">Changelog</a>
-    </footer>
+  <button onclick="goBack()" class="back-btn"><span>Back</span></button>
+
+  <div class="footer-links">
+    <a href="credits.html">Credits &amp; License</a>
+    <a href="#" id="changelogLink">Changelog</a>
+  </div>
+</footer>
   </div>
 </div>
 <script>
