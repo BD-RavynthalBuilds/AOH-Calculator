@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Punishment Checker - Age of Heroes Helper</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+.container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 30%, #1a2226 0%, #0d1113 70%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  padding: 20px;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: radial-gradient(#bd9f67 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.04;
+  animation: backgroundShift 180s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes backgroundShift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-50%, -50%); }
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+  background: #243137;
+  padding: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(189, 159, 103, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+}
+
+@media (max-width: 600px) {
+  .content { padding: 24px 16px; gap: 14px; }
+  h1 { font-size: 1.6rem; letter-spacing: 1px; }
+}
+
+h1 {
+  color: #bd9f67;
+  font-size: 2.2rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+p { color: #e0d0b5; font-size: 1.1rem; }
+
+.stat-preview {
+  font-size: 0.9rem;
+  color: #bd9f67;
+  background: rgba(26, 34, 38, 0.6);
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(189, 159, 103, 0.1);
+  margin-bottom: 5px;
+}
+
+input[type="number"] {
+  background: #1a2226;
+  border: 1px solid #bd9f67;
+  border-radius: 4px;
+  padding: 12px;
+  color: #e0d0b5;
+  font-size: 1.1rem;
+  text-align: center;
+  width: 180px;
+  outline: none;
+  transition: all 0.3s ease;
+  margin-top: 5px;
+}
+
+input[type="number"]:focus { box-shadow: 0 0 10px rgba(189, 159, 103, 0.3); }
+
+/* ================================================================
+   Universal Conic Aura Button
+   ================================================================ */
+button, .discord-btn {
+  position: relative;
+  display: inline-block;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: bold;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer;
+  border-radius: 50px !important;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  z-index: 1;
+  text-decoration: none;
+}
+button:hover, .discord-btn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 20px rgba(189, 159, 103, 0.3);
+}
+button::before, .discord-btn::before {
+  content: "";
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: conic-gradient(from 0deg,#bd9f67 0%,#e0d0b5 25%,#9c8252 50%,#f3e8d5 75%,#bd9f67 100%);
+  z-index: -2;
+  filter: blur(4px);
+  transform: rotate(0deg);
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+button:hover::before, .discord-btn:hover::before { transform: rotate(180deg); }
+button::after, .discord-btn::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: #1a2226;
+  border-radius: 48px;
+  z-index: -1;
+  transition: background 0.4s ease;
+}
+button:hover::after, .discord-btn:hover::after { background: rgba(189, 159, 103, 0.08); }
+button span, .discord-btn span {
+  display: block;
+  position: relative;
+  z-index: 2;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #e0d0b5;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+button:hover span, .discord-btn:hover span {
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+button:active, .discord-btn:active { transform: scale(0.98); }
+
+.discord-btn {
+  display: none;
+  width: 100%;
+  text-align: center;
+  margin-top: 15px;
+}
+.back-btn { margin-top: 15px; }
+
+/* ================================================================
+   Analysis Box
+   ================================================================ */
+.analysis-box {
+  display: none;
+  background: #1a2226;
+  border-radius: 6px;
+  padding: 20px;
+  width: 100%;
+  text-align: left;
+  border-left: 3px solid #bd9f67;
+  margin-top: 10px;
+}
+
+.analysis-box h3 {
+  color: #bd9f67;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.analysis-line {
+  color: #e0d0b5;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.analysis-line span:last-child { font-weight: bold; color: #fff; }
+.analysis-line.danger span:last-child { color: #ff6b6b; }
+.analysis-line.warning span:last-child { color: #ffd166; }
+
+.recovery-tip {
+  font-size: 0.85rem;
+  color: #bd9f67;
+  border-top: 1px solid rgba(189, 159, 103, 0.1);
+  padding-top: 10px;
+  margin-top: 12px;
+  line-height: 1.4;
+}
+
+/* ================================================================
+   Tooltip System
+   ================================================================ */
+.tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: help;
+}
+
+.tooltip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(189, 159, 103, 0.25);
+  border: 1px solid rgba(189, 159, 103, 0.5);
+  font-size: 10px;
+  font-weight: bold;
+  color: #bd9f67;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.tooltip-wrap:hover .tooltip-icon {
+  background: rgba(189, 159, 103, 0.5);
+}
+
+.tooltip-bubble {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0d1113;
+  border: 1px solid rgba(189, 159, 103, 0.4);
+  border-radius: 6px;
+  padding: 10px 13px;
+  width: 240px;
+  font-size: 0.8rem;
+  color: #e0d0b5;
+  line-height: 1.5;
+  z-index: 100;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  pointer-events: none;
+  text-align: left;
+  font-weight: normal;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.tooltip-bubble::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(189, 159, 103, 0.4);
+}
+
+.tooltip-wrap:hover .tooltip-bubble,
+.tooltip-wrap:focus-within .tooltip-bubble {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Mobile: show tooltip above with max-width capped */
+@media (max-width: 600px) {
+  .tooltip-bubble {
+    width: 200px;
+    left: auto;
+    right: 0;
+    transform: none;
+  }
+  .tooltip-bubble::after {
+    left: auto;
+    right: 12px;
+    transform: none;
+  }
+}
+
+/* Severity badge colours on result value */
+.badge-safe    { color: #2a9d8f !important; }
+.badge-low     { color: #ffd166 !important; }
+.badge-medium  { color: #f4a261 !important; }
+.badge-high    { color: #e76f51 !important; }
+.badge-critical{ color: #ff6b6b !important; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="content">
+    <h1>Punishment Checker</h1>
+    <div class="stat-preview" id="playerLevelInfo">Starting Level: ---</div>
+    <p>Enter levels gained today:</p>
+    <input type="number" id="gainedLevels" placeholder="Levels" min="0">
+
+    <button onclick="analyzeRisk()"><span>Analyze Impact</span></button>
+
+    <div class="analysis-box" id="analysisResult">
+      <h3 id="statusTitle">Status Evaluation</h3>
+
+      <div class="analysis-line">
+        <span>Your Limit:</span>
+        <span id="limitStat">0 Lvl</span>
+      </div>
+
+      <div class="analysis-line">
+        <span class="tooltip-wrap">
+          Surplus Gained
+          <span class="tooltip-icon">?</span>
+          <span class="tooltip-bubble">How many levels you gained above your daily cap. Any positive number here means a violation has been logged against your account.</span>
+        </span>
+        <span id="surplusStat">0 Lvl</span>
+      </div>
+
+      <div class="analysis-line danger" id="banRow">
+        <span class="tooltip-wrap">
+          Ban Duration
+          <span class="tooltip-icon">?</span>
+          <span class="tooltip-bubble">
+            Tier breakdown:<br>
+            <strong>1–5 over:</strong> Days = levels exceeded<br>
+            <strong>6–10 over:</strong> Days = 2× exceeded<br>
+            <strong>11–50 over:</strong> 25–45 day fixed window<br>
+            <strong>51–100 over:</strong> 60–120 day window<br>
+            <strong>101–200 over:</strong> 120–180 day window<br>
+            <strong>201+ over:</strong> Permanent ban
+          </span>
+        </span>
+        <span id="banStat">None</span>
+      </div>
+
+      <div class="analysis-line danger" id="penaltyRow">
+        <span class="tooltip-wrap">
+          Levels Stripped
+          <span class="tooltip-icon">?</span>
+          <span class="tooltip-bubble">
+            Levels removed from your account on top of the ban:<br>
+            <strong>1–5 over:</strong> exact overage removed<br>
+            <strong>6–10 over:</strong> 2× the overage<br>
+            <strong>11–50 over:</strong> 3× overage + the spike<br>
+            <strong>51–100 over:</strong> 4× overage + spike<br>
+            <strong>101–200 over:</strong> 5× overage + spike<br>
+            <strong>201+:</strong> Full hard reset to Level 0
+          </span>
+        </span>
+        <span id="penaltyStat">None</span>
+      </div>
+
+      <div class="analysis-line" id="finalLvlRow">
+        <span>Resulting Level:</span>
+        <span id="finalLvlStat">---</span>
+      </div>
+
+      <div class="analysis-line warning" id="appealRow">
+        <span class="tooltip-wrap">
+          Appeal Status
+          <span class="tooltip-icon">?</span>
+          <span class="tooltip-bubble">Appeals are handled exclusively through the official AoH Discord server. They are only considered after you have been banned for a minimum of 90 days. Appeals are never guaranteed to be accepted.</span>
+        </span>
+        <span id="appealStat">---</span>
+      </div>
+
+      <div class="analysis-line" id="riskRow" style="margin-top:4px;">
+        <span class="tooltip-wrap">
+          Risk Level
+          <span class="tooltip-icon">?</span>
+          <span class="tooltip-bubble">
+            <strong>Safe:</strong> No violation. Clean run.<br>
+            <strong>Low:</strong> Minor breach — short ban, small level loss. Manageable.<br>
+            <strong>Medium:</strong> Moderate breach — multi-week ban, significant level loss.<br>
+            <strong>High:</strong> Serious breach — months-long ban, heavy stripping. Account at risk.<br>
+            <strong>Critical:</strong> Maximum breach — permanent ban and full account reset to Level 0.
+          </span>
+        </span>
+        <span id="riskStat">---</span>
+      </div>
+
+      <div class="recovery-tip" id="recoveryStrategy"></div>
+      <a href="https://discord.gg/YOUR_INVITE_HERE" target="_blank" class="discord-btn" id="discordLink"><span>Open Appeals Server</span></a>
+    </div>
+
+    <button class="back-btn" onclick="goBack()"><span>Back</span></button>
+  </div>
+</div>
+
+<script>
+function getLevelFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const lvl = Number(params.get("level"));
+  return (lvl && lvl > 0) ? lvl : null;
+}
+
+let playerLevel = getLevelFromURL();
+if (!playerLevel) playerLevel = 13085;
+
+document.getElementById("playerLevelInfo").textContent = "Starting Level: " + playerLevel;
+
+function getDailyLimit(level){
+  if(level <= 999)   return 999;
+  if(level <= 1999)  return 120;
+  if(level <= 2999)  return 88;
+  if(level <= 3999)  return 82;
+  if(level <= 4999)  return 74;
+  if(level <= 5999)  return 69;
+  if(level <= 6999)  return 62;
+  if(level <= 7999)  return 54;
+  if(level <= 8999)  return 46;
+  if(level <= 9999)  return 40;
+  if(level <= 10500) return 34;
+  if(level <= 10999) return 30;
+  if(level <= 11999) return 26;
+  if(level <= 12999) return 23;
+  if(level <= 13999) return 21;
+  if(level <= 14999) return 18;
+  if(level <= 15999) return 14;
+  if(level <= 16999) return 11;
+  if(level <= 17999) return 7;
+  if(level <= 18999) return 4;
+  if(level <= 19999) return 2;
+  return 1;
+}
+
+function analyzeRisk(){
+  const gained = Number(document.getElementById("gainedLevels").value);
+  const limit = getDailyLimit(playerLevel);
+  const box = document.getElementById("analysisResult");
+  const discordBtn = document.getElementById("discordLink");
+
+  document.getElementById("limitStat").textContent = limit + " Lvl";
+  box.style.display = "block";
+
+  if(gained <= limit){
+    document.getElementById("statusTitle").textContent = "✅ Within Safe Bounds";
+    document.getElementById("statusTitle").style.color = "#2a9d8f";
+    document.getElementById("surplusStat").textContent = "0 Lvl";
+    document.getElementById("banStat").textContent = "None";
+    document.getElementById("penaltyStat").textContent = "0 Levels Removed";
+    document.getElementById("finalLvlStat").textContent = (playerLevel + gained);
+    document.getElementById("appealStat").textContent = "Not Applicable";
+    document.getElementById("riskStat").textContent = "Safe";
+    document.getElementById("riskStat").className = "badge-safe";
+    document.getElementById("recoveryStrategy").textContent = "Your progression is safe. You have not flagged the tracking parameters.";
+    discordBtn.style.display = "none";
+    document.getElementById("banRow").className = "analysis-line";
+    document.getElementById("penaltyRow").className = "analysis-line";
+    document.getElementById("appealRow").className = "analysis-line";
+  } else {
+    document.getElementById("statusTitle").textContent = "⚠️ Violation Logged";
+    document.getElementById("statusTitle").style.color = "#ff6b6b";
+
+    const over = gained - limit;
+    document.getElementById("surplusStat").textContent = "+" + over + " Lvl over limit";
+
+    const levelReached = playerLevel + gained;
+    let banText = "", totalRemoved = 0, isPermanent = false, isHardReset = false, requires90Days = false;
+    let riskLabel = "", riskClass = "";
+
+    if(over >= 1 && over <= 5){
+      banText = `${over} Day Ban`;
+      totalRemoved = over;
+      riskLabel = "Low"; riskClass = "badge-low";
+    } else if(over >= 6 && over <= 10){
+      banText = `${over * 2} Day Ban`;
+      totalRemoved = over * 2;
+      riskLabel = "Low"; riskClass = "badge-low";
+    } else if(over >= 11 && over <= 50){
+      banText = "25 – 45 Day Ban";
+      totalRemoved = (over * 3) + over;
+      riskLabel = "Medium"; riskClass = "badge-medium";
+    } else if(over >= 51 && over <= 100){
+      banText = "60 – 120 Day Ban";
+      totalRemoved = (over * 4) + over;
+      requires90Days = true;
+      riskLabel = "High"; riskClass = "badge-high";
+    } else if(over >= 101 && over <= 200){
+      banText = "120 – 180 Day Ban";
+      totalRemoved = (over * 5) + over;
+      requires90Days = true;
+      riskLabel = "High"; riskClass = "badge-high";
+    } else {
+      banText = "Permanent Ban";
+      isPermanent = true; isHardReset = true; requires90Days = true;
+      totalRemoved = levelReached;
+      riskLabel = "Critical"; riskClass = "badge-critical";
+    }
+
+    const finalLevel = isHardReset ? 0 : Math.max(0, levelReached - totalRemoved);
+
+    document.getElementById("banStat").textContent = banText;
+    document.getElementById("penaltyStat").textContent = isHardReset ? "Automatic Hard Reset" : `-${totalRemoved} Levels`;
+    document.getElementById("finalLvlStat").textContent = isHardReset ? "Level 0 (Wiped)" : `${finalLevel} (Was level ${levelReached})`;
+    document.getElementById("riskStat").textContent = riskLabel;
+    document.getElementById("riskStat").className = riskClass;
+
+    discordBtn.style.display = "block";
+
+    if(isHardReset){
+      document.getElementById("appealStat").textContent = "BLACKLISTED (Appeals strictly blocked)";
+      document.getElementById("appealRow").className = "analysis-line danger";
+    } else if(requires90Days){
+      document.getElementById("appealStat").textContent = "Locked (Only evaluable after 90 days)";
+      document.getElementById("appealRow").className = "analysis-line danger";
+    } else {
+      document.getElementById("appealStat").textContent = "Eligible via Discord";
+      document.getElementById("appealRow").className = "analysis-line warning";
+    }
+
+    if(isHardReset){
+      document.getElementById("recoveryStrategy").textContent = "CRITICAL LIMIT BREACH (+201 over). Profile permanently banned and automatically hard reset to Level 0. Recovery is impossible on this profile configuration.";
+    } else {
+      const currentRecoveryRate = getDailyLimit(finalLevel);
+      const recoveryDays = Math.ceil(totalRemoved / currentRecoveryRate);
+      document.getElementById("recoveryStrategy").textContent = `Recovery Forecast: To recoup the loss of ${totalRemoved} levels at your post-penalty bracket (${currentRecoveryRate}/day), you will need approximately ${recoveryDays} days of clean daily maximum runs after serving your ban.`;
+    }
+
+    document.getElementById("banRow").className = "analysis-line danger";
+    document.getElementById("penaltyRow").className = "analysis-line danger";
+  }
+}
+
+function goBack(){
+  window.location.href = "welcome_main.html?level=" + playerLevel;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog – Age of Heroes Helper</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+.container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 30%, #1a2226 0%, #0d1113 70%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  padding: 40px 20px 60px;
+  overflow-x: hidden;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 150%; height: 150%;
+  background-image: radial-gradient(#bd9f67 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.04;
+  animation: backgroundShift 180s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes backgroundShift {
+  0% { transform: translate(0,0); }
+  100% { transform: translate(-50%,-50%); }
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ─── Header ─── */
+.page-header { text-align: center; }
+
+h1 {
+  color: #bd9f67;
+  font-size: 2.6rem;
+  font-weight: 400;
+  letter-spacing: 3px;
+  font-family: 'Georgia', serif;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.subtitle {
+  color: #a49683;
+  font-size: 0.95rem;
+  margin-top: 6px;
+  letter-spacing: 1px;
+}
+
+/* ─── Buttons ─── */
+button, a.btn-link {
+  position: relative;
+  display: inline-block;
+  padding: 11px 26px;
+  font-size: 14px;
+  font-weight: bold;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer;
+  border-radius: 50px !important;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  z-index: 1;
+  text-decoration: none;
+}
+button:hover, a.btn-link:hover { transform: scale(1.04); box-shadow: 0 0 20px rgba(189,159,103,0.3); }
+button::before, a.btn-link::before {
+  content: "";
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: conic-gradient(from 0deg,#bd9f67 0%,#e0d0b5 25%,#9c8252 50%,#f3e8d5 75%,#bd9f67 100%);
+  z-index: -2; filter: blur(4px);
+  transform: rotate(0deg);
+  transition: transform 1.2s cubic-bezier(0.25,1,0.5,1);
+}
+button:hover::before, a.btn-link:hover::before { transform: rotate(180deg); }
+button::after, a.btn-link::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: #1a2226;
+  border-radius: 48px;
+  z-index: -1;
+  transition: background 0.4s ease;
+}
+button:hover::after, a.btn-link:hover::after { background: rgba(189,159,103,0.08); }
+button span, a.btn-link span {
+  display: block;
+  position: relative;
+  z-index: 2;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #e0d0b5;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+button:hover span, a.btn-link:hover span { color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+button:active, a.btn-link:active { transform: scale(0.98); }
+
+.btn-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ─── Entry Types ─── */
+.tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: bold;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.tag-rule    { background: rgba(224,85,85,0.15);  color: #e05555; border: 1px solid rgba(224,85,85,0.3); }
+.tag-update  { background: rgba(76,201,240,0.12); color: #4cc9f0; border: 1px solid rgba(76,201,240,0.3); }
+.tag-notice  { background: rgba(244,162,97,0.12); color: #f4a261; border: 1px solid rgba(244,162,97,0.3); }
+.tag-patch   { background: rgba(42,157,143,0.12); color: #2a9d8f; border: 1px solid rgba(42,157,143,0.3); }
+
+/* ─── Entry Card ─── */
+.entry-card {
+  background: #1e2c33;
+  border: 1px solid rgba(189,159,103,0.12);
+  border-radius: 8px;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+.entry-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px 18px 12px;
+  border-bottom: 1px solid rgba(189,159,103,0.08);
+}
+
+.entry-title {
+  color: #e0d0b5;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.entry-meta {
+  font-size: 0.78rem;
+  color: #a49683;
+  margin-top: 2px;
+}
+
+.entry-body {
+  padding: 12px 18px 16px;
+  color: #c9b99a;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+.entry-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 0 14px 12px;
+}
+
+.icon-btn {
+  background: rgba(189,159,103,0.08);
+  border: 1px solid rgba(189,159,103,0.2);
+  border-radius: 4px;
+  color: #bd9f67;
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+.icon-btn:hover { background: rgba(189,159,103,0.2); color: #e0d0b5; }
+.icon-btn.del:hover { background: rgba(224,85,85,0.15); border-color: rgba(224,85,85,0.4); color: #e05555; }
+
+/* Override conic aura for icon-btns (they're small inline buttons) */
+.icon-btn::before, .icon-btn::after { display: none !important; }
+.icon-btn span { display: inline !important; font-size: inherit !important; letter-spacing: inherit !important; text-transform: none !important; color: inherit !important; }
+
+.empty-state {
+  text-align: center;
+  padding: 50px 20px;
+  color: rgba(189,159,103,0.3);
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+/* ─── Staff Panel ─── */
+#staffPanel { display: none; }
+
+.staff-card {
+  background: #1e2c33;
+  border: 1px solid rgba(189,159,103,0.2);
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.staff-card h2 {
+  color: #bd9f67;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border-bottom: 1px solid rgba(189,159,103,0.15);
+  padding-bottom: 10px;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 150px;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  color: #a49683;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+input[type="text"], input[type="password"], textarea, select {
+  background: #1a2226;
+  border: 1px solid rgba(189,159,103,0.3);
+  border-radius: 5px;
+  padding: 9px 12px;
+  color: #e0d0b5;
+  font-size: 0.93rem;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  width: 100%;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: #bd9f67;
+  box-shadow: 0 0 10px rgba(189,159,103,0.15);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+select option { background: #1a2226; color: #e0d0b5; }
+
+/* ─── Auth Gate ─── */
+#authGate {
+  background: #1e2c33;
+  border: 1px solid rgba(189,159,103,0.2);
+  border-radius: 8px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  text-align: center;
+}
+
+#authGate h2 {
+  color: #bd9f67;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+#authGate p {
+  color: #a49683;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.auth-error {
+  color: #e05555;
+  font-size: 0.85rem;
+  display: none;
+}
+
+/* Staff toggle link */
+.staff-toggle-wrap {
+  text-align: center;
+}
+
+.staff-link {
+  font-size: 0.78rem;
+  color: rgba(189,159,103,0.3);
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  border-bottom: 1px dashed rgba(189,159,103,0.2);
+  transition: color 0.3s;
+  user-select: none;
+}
+.staff-link:hover { color: rgba(189,159,103,0.6); }
+
+/* Success flash */
+.flash {
+  background: rgba(42,157,143,0.15);
+  border: 1px solid rgba(42,157,143,0.3);
+  border-radius: 6px;
+  padding: 10px 16px;
+  color: #2a9d8f;
+  font-size: 0.88rem;
+  display: none;
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 600px) {
+  h1 { font-size: 2rem; letter-spacing: 1px; }
+  .btn-row { justify-content: center; }
+  .entry-header { flex-direction: column; align-items: flex-start; }
+  .form-row { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="content-wrapper">
+
+    <div class="page-header">
+      <h1>Changelog</h1>
+      <div class="subtitle">Rule updates, patch notes &amp; announcements</div>
+    </div>
+
+    <div class="btn-row">
+      <button onclick="goBack()"><span>← Dashboard</span></button>
+      <div style="font-size:0.8rem; color:#a49683;" id="entryCount"></div>
+    </div>
+
+    <!-- Public feed -->
+    <div id="feedContainer"></div>
+
+    <!-- Empty state -->
+    <div class="empty-state" id="emptyState" style="display:none;">
+      No entries yet. Check back later for rule updates and patch notes.
+    </div>
+
+    <!-- Staff toggle (subtle) -->
+    <div class="staff-toggle-wrap">
+      <span class="staff-link" onclick="toggleStaffSection()">Staff Access</span>
+    </div>
+
+    <!-- Staff auth + panel -->
+    <div id="staffSection" style="display:none;">
+
+      <!-- Auth gate -->
+      <div id="authGate">
+        <h2>🔐 Staff Login</h2>
+        <p>This section is restricted to authorized staff. Enter your staff password to continue.</p>
+        <input type="password" id="staffPassword" placeholder="Staff password" style="max-width:280px;" onkeydown="if(event.key==='Enter')attemptLogin()">
+        <span class="auth-error" id="authError">Incorrect password. Try again.</span>
+        <button onclick="attemptLogin()"><span>Unlock</span></button>
+      </div>
+
+      <!-- Staff panel (shown after login) -->
+      <div id="staffPanel">
+        <div class="staff-card">
+          <h2>📋 Post New Entry</h2>
+
+          <div class="flash" id="postFlash">Entry posted successfully.</div>
+
+          <div class="form-row">
+            <div class="form-group" style="flex:2;">
+              <label>Title</label>
+              <input type="text" id="entryTitle" placeholder="e.g. Rule 1 updated — new level tiers">
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label>Type</label>
+              <select id="entryType">
+                <option value="rule">Rule Change</option>
+                <option value="update">Game Update</option>
+                <option value="notice">Notice</option>
+                <option value="patch">Patch / Fix</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Body</label>
+            <textarea id="entryBody" placeholder="Describe the change or update in full detail…"></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Posted by</label>
+              <input type="text" id="entryAuthor" placeholder="Your staff name">
+            </div>
+            <div class="form-group" style="justify-content:flex-end; padding-top:22px;">
+              <button onclick="postEntry()"><span>Post Entry</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Manage entries -->
+        <div class="staff-card" style="margin-top:16px;" id="manageSection">
+          <h2>🗂 Manage Entries</h2>
+          <div id="manageList"></div>
+        </div>
+
+        <div style="text-align:center; margin-top:14px;">
+          <button onclick="logout()"><span>Log Out</span></button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────
+   CONFIG
+   Change STAFF_PASSWORD to whatever you want.
+   Entries are stored in localStorage keyed by STORAGE_KEY.
+───────────────────────────────────────────── */
+const STAFF_PASSWORD = "aoh-staff-2026";
+const STORAGE_KEY    = "aoh_changelog_entries";
+
+/* ─── Data ─── */
+function loadEntries() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch(e) { return []; }
+}
+
+function saveEntries(entries) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+}
+
+/* ─── Tag helpers ─── */
+function tagClass(type) {
+  return { rule:'tag-rule', update:'tag-update', notice:'tag-notice', patch:'tag-patch' }[type] || 'tag-update';
+}
+function tagLabel(type) {
+  return { rule:'Rule Change', update:'Game Update', notice:'Notice', patch:'Patch / Fix' }[type] || type;
+}
+
+/* ─── Render public feed ─── */
+function renderFeed() {
+  const entries = loadEntries();
+  const container = document.getElementById('feedContainer');
+  const emptyState = document.getElementById('emptyState');
+  const countEl = document.getElementById('entryCount');
+
+  countEl.textContent = entries.length ? `${entries.length} entr${entries.length === 1 ? 'y' : 'ies'}` : '';
+
+  if (entries.length === 0) {
+    container.innerHTML = '';
+    emptyState.style.display = 'block';
+    return;
+  }
+
+  emptyState.style.display = 'none';
+  // Newest first
+  const sorted = [...entries].sort((a,b) => b.timestamp - a.timestamp);
+
+  container.innerHTML = sorted.map(e => `
+    <div class="entry-card" style="margin-bottom:16px;">
+      <div class="entry-header">
+        <div>
+          <div class="entry-title">${escapeHtml(e.title)}</div>
+          <div class="entry-meta">Posted by ${escapeHtml(e.author)} · ${formatDate(e.timestamp)}</div>
+        </div>
+        <span class="tag ${tagClass(e.type)}">${tagLabel(e.type)}</span>
+      </div>
+      <div class="entry-body">${escapeHtml(e.body)}</div>
+    </div>
+  `).join('');
+}
+
+/* ─── Render manage list (staff only) ─── */
+function renderManage() {
+  const entries = loadEntries();
+  const list = document.getElementById('manageList');
+
+  if (entries.length === 0) {
+    list.innerHTML = '<div style="color:#a49683; font-size:0.88rem; padding:8px 0;">No entries to manage.</div>';
+    return;
+  }
+
+  const sorted = [...entries].sort((a,b) => b.timestamp - a.timestamp);
+  list.innerHTML = sorted.map(e => `
+    <div class="entry-card" style="margin-bottom:12px;">
+      <div class="entry-header">
+        <div>
+          <div class="entry-title">${escapeHtml(e.title)}</div>
+          <div class="entry-meta">${formatDate(e.timestamp)} · ${escapeHtml(e.author)}</div>
+        </div>
+        <span class="tag ${tagClass(e.type)}">${tagLabel(e.type)}</span>
+      </div>
+      <div class="entry-footer">
+        <button class="icon-btn del" onclick="deleteEntry('${e.id}')">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ─── Post ─── */
+function postEntry() {
+  const title  = document.getElementById('entryTitle').value.trim();
+  const body   = document.getElementById('entryBody').value.trim();
+  const author = document.getElementById('entryAuthor').value.trim();
+  const type   = document.getElementById('entryType').value;
+
+  if (!title) { alert('Please add a title.'); return; }
+  if (!body)  { alert('Please add a body.'); return; }
+  if (!author){ alert('Please add your name.'); return; }
+
+  const entries = loadEntries();
+  entries.push({
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+    title, body, author, type,
+    timestamp: Date.now()
+  });
+  saveEntries(entries);
+
+  // Clear form
+  document.getElementById('entryTitle').value  = '';
+  document.getElementById('entryBody').value   = '';
+
+  const flash = document.getElementById('postFlash');
+  flash.style.display = 'block';
+  setTimeout(() => flash.style.display = 'none', 3000);
+
+  renderFeed();
+  renderManage();
+}
+
+/* ─── Delete ─── */
+function deleteEntry(id) {
+  if (!confirm('Delete this entry? This cannot be undone.')) return;
+  const entries = loadEntries().filter(e => e.id !== id);
+  saveEntries(entries);
+  renderFeed();
+  renderManage();
+}
+
+/* ─── Auth ─── */
+let staffUnlocked = false;
+
+function toggleStaffSection() {
+  const section = document.getElementById('staffSection');
+  section.style.display = section.style.display === 'none' ? 'block' : 'none';
+}
+
+function attemptLogin() {
+  const pw = document.getElementById('staffPassword').value;
+  if (pw === STAFF_PASSWORD) {
+    staffUnlocked = true;
+    document.getElementById('authGate').style.display   = 'none';
+    document.getElementById('staffPanel').style.display = 'block';
+    renderManage();
+  } else {
+    document.getElementById('authError').style.display = 'inline';
+    document.getElementById('staffPassword').value = '';
+    setTimeout(() => document.getElementById('authError').style.display = 'none', 3000);
+  }
+}
+
+function logout() {
+  staffUnlocked = false;
+  document.getElementById('authGate').style.display   = 'block';
+  document.getElementById('staffPanel').style.display = 'none';
+  document.getElementById('staffSection').style.display = 'none';
+  document.getElementById('staffPassword').value = '';
+}
+
+/* ─── Helpers ─── */
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
+function formatDate(ts) {
+  const d = new Date(ts);
+  return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })
+       + ' at ' + d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+}
+
+function getLevelParam() {
+  return new URLSearchParams(window.location.search).get("level") || "1";
+}
+
+function goBack() {
+  window.location.href = "welcome_main.html?level=" + getLevelParam();
+}
+
+/* ─── Seed default entries on first load ─── */
+(function seedIfEmpty() {
+  if (loadEntries().length > 0) return;
+  const seed = [
+    {
+      id: 'seed1',
+      title: 'Rules page updated — Rule 1 daily limits revised',
+      body: 'The level cap table has been reviewed and all tiers confirmed accurate for the current season. The level 10000–10500 bracket remains at 34/day.',
+      author: 'Dianna',
+      type: 'rule',
+      timestamp: Date.now() - 86400000 * 8
+    },
+    {
+      id: 'seed2',
+      title: 'AOH Helper v2 launched — new punishment analyzer & planner',
+      body: 'The helper app has been fully redesigned. New features include the Punishment Impact Checker, Level Planner with CSV export, and an updated Rules viewer with category filters.',
+      author: 'Dianna',
+      type: 'update',
+      timestamp: Date.now() - 86400000 * 3
+    }
+  ];
+  saveEntries(seed);
+})();
+
+/* ─── Init ─── */
+renderFeed();
+</script>
+</body>
+</html>

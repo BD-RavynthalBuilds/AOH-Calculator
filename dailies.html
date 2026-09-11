@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dailies - Age of Heroes Helper</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Luxury Animated Background */
+.container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 30%, #1a2226 0%, #0d1113 70%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  padding: 20px;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: radial-gradient(#bd9f67 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.04;
+  animation: backgroundShift 180s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes backgroundShift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-50%, -50%); }
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+  text-align: center;
+  background: #243137;
+  padding: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(189, 159, 103, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+}
+
+h1 {
+  color: #bd9f67;
+  font-size: 2.2rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Card Layout */
+.card {
+  width: 360px;
+  height: 240px;
+  background: #1a2226;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 1.4s cubic-bezier(0.25, 1, 0.5, 1);
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(189, 159, 103, 0.1);
+}
+
+.border {
+  position: absolute;
+  inset: 0px;
+  border: 2px solid #bd9f67;
+  opacity: 0;
+  transform: rotate(10deg);
+  transition: all 1.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.card-inner-content {
+  transition: all 0.5s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  z-index: 2;
+  position: relative;
+  transform: translateY(-8px);
+}
+
+.card-inner-content .logo {
+  height: 45px;
+  position: relative;
+  width: 80px; 
+  transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.card-inner-content .logo .text-segment {
+  font-family: 'Georgia', serif;
+  font-size: 32px;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  line-height: 1;
+  text-decoration: underline;
+  text-decoration-color: #bd9f67;
+  text-align: center;
+}
+
+.card-inner-content .logo .logo1 {
+  color: #bd9f67;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.card-inner-content .logo .logo2 {
+  color: #bd9f67;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card-inner-content .logo .trail {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+}
+
+.card-inner-content .hover-hint {
+  color: rgba(189, 159, 103, 0.6);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  position: absolute;
+  bottom: -32px;
+  transition: all 0.4s ease-in-out;
+  opacity: 1;
+}
+
+.card-inner-content .info-text {
+  color: #bd9f67;
+  font-size: 14px;
+  position: absolute;
+  bottom: -32px;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+  letter-spacing: 1px;
+}
+
+#levelDisplay {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #bd9f67;
+  letter-spacing: 3px;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+}
+
+/* Hover Transitions */
+.card:hover {
+  border-radius: 0;
+  transform: scale(1.05);
+  box-shadow: 0 0 0 2px #bd9f67, 0 15px 40px rgba(189, 159, 103, 0.15);
+}
+
+.card:hover .logo { width: 240px; }
+.card:hover .logo .logo1 { opacity: 0; }
+.card:hover .logo .logo2 { opacity: 1; }
+.card:hover .border { inset: 15px; opacity: 1; transform: rotate(0); }
+.card:hover .card-inner-content .hover-hint { opacity: 0; transform: translateY(-5px); }
+.card:hover .card-inner-content .info-text { opacity: 1; }
+.card:hover #levelDisplay { opacity: 1; }
+.card:hover .trail { animation: trail 0.8s ease-in-out; }
+
+@keyframes trail {
+  0% { background: linear-gradient(90deg, rgba(189, 159, 103, 0) 90%, rgb(189, 159, 103) 100%); opacity: 0; }
+  30% { background: linear-gradient(90deg, rgba(189, 159, 103, 0) 70%, rgb(189, 159, 103) 100%); opacity: 1; }
+  70% { background: linear-gradient(90deg, rgba(189, 159, 103, 0) 70%, rgb(189, 159, 103) 100%); opacity: 1; }
+  95% { background: linear-gradient(90deg, rgba(189, 159, 103, 0) 90%, rgb(189, 159, 103) 100%); opacity: 0; }
+}
+
+/* ==========================================================================
+   Global Button Upgrade - Universal Conic Aura Matrix
+   ========================================================================== */
+button {
+  position: relative;
+  display: inline-block;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: bold;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer;
+  border-radius: 50px !important;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  z-index: 1;
+  text-decoration: none;
+}
+
+button:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 20px rgba(189, 159, 103, 0.3);
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    #bd9f67 0%,
+    #e0d0b5 25%,
+    #9c8252 50%,
+    #f3e8d5 75%,
+    #bd9f67 100%
+  );
+  z-index: -2;
+  filter: blur(4px);
+  transform: rotate(0deg);
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+button:hover::before {
+  transform: rotate(180deg);
+}
+
+button::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: #1a2226;
+  border-radius: 48px;
+  z-index: -1;
+  transition: background 0.4s ease;
+}
+
+button:hover::after {
+  background: rgba(189, 159, 103, 0.08);
+}
+
+button span {
+  display: block;
+  position: relative;
+  z-index: 2;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #e0d0b5;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+button:hover span {
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+
+@media (max-width: 600px) {
+  .content-wrapper { padding: 20px 12px 40px; }
+  h1 { font-size: 1.7rem; }
+  .card { width: 100% !important; max-width: 100% !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="content-wrapper">
+    <h1>Daily Limit Checker</h1>
+    
+    <div class="card" onclick="goBack()">
+      <div class="border"></div>
+      <div class="card-inner-content">
+        <div class="logo">
+          <div class="text-segment logo1">AOH</div>
+          <div class="text-segment logo2">Age of Heroes</div>
+          <span class="trail"></span>
+        </div>
+        <div class="hover-hint">Hover card to expand details</div>
+        <span class="info-text" id="dailyLimitDisplay">Calculating...</span>
+      </div>
+      <span id="levelDisplay">Current Level: ---</span>
+    </div>
+
+    <button class="back-btn" onclick="goBack()"><span>Back</span></button>
+  </div>
+</div>
+
+<script>
+function getLevelFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const lvl = Number(params.get("level"));
+  return (lvl && lvl > 0) ? lvl : null;
+}
+
+let playerLevel = getLevelFromURL();
+if (!playerLevel) {
+  window.location.href = "index.html";
+}
+
+function getDailyLimit(level){
+    if(level < 1000) return 999;
+    if(level < 2000) return 120;
+    if(level < 3000) return 88;
+    if(level < 4000) return 82;
+    if(level < 5000) return 74;
+    if(level < 6000) return 69;
+    if(level < 7000) return 62;
+    if(level < 8000) return 54;
+    if(level < 9000) return 46;
+    if(level < 10000) return 40;
+    if(level < 10500) return 34;
+    if(level < 11000) return 30;
+    if(level < 12000) return 26;
+    if(level < 13000) return 23;
+    if(level < 14000) return 21;
+    if(level < 15000) return 18;
+    if(level < 16000) return 14;
+    if(level < 17000) return 11;
+    if(level < 18000) return 7;
+    if(level < 19000) return 4;
+    if(level < 20000) return 2;
+    return 1;
+}
+
+document.getElementById("dailyLimitDisplay").textContent = "Limit: " + getDailyLimit(playerLevel) + " Lvl / Day";
+document.getElementById("levelDisplay").textContent = "Current Level: " + playerLevel;
+
+function goBack(){ 
+  window.location.href = "welcome_main.html?level=" + playerLevel; 
+}
+</script>
+</body>
+</html>

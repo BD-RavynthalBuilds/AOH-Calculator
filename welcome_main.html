@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AOH Helper</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Luxury Animated Background matched to dailies */
+.container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 30%, #1a2226 0%, #0d1113 70%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  background-image: radial-gradient(#bd9f67 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.04;
+  animation: backgroundShift 180s linear infinite;
+}
+
+@keyframes backgroundShift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-50%, -50%); }
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+  background: #243137;
+  padding: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(189, 159, 103, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+h1 {
+  color: #bd9f67;
+  font-size: 2.2rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+p {
+  color: #e0d0b5;
+  font-size: 1.1rem;
+}
+
+input[type="number"] {
+  background: #1a2226;
+  border: 1px solid #bd9f67;
+  border-radius: 4px;
+  padding: 12px;
+  color: #e0d0b5;
+  font-size: 1.1rem;
+  text-align: center;
+  width: 180px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+input[type="number"]:focus {
+  box-shadow: 0 0 10px rgba(189, 159, 103, 0.3);
+}
+
+/* ==========================================================================
+   Global Button Upgrade - Universal Conic Aura Matrix
+   ========================================================================== */
+button {
+  position: relative;
+  display: inline-block;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: bold;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer;
+  border-radius: 50px !important;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  z-index: 1;
+  text-decoration: none;
+}
+
+button:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 20px rgba(189, 159, 103, 0.3);
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    #bd9f67 0%,
+    #e0d0b5 25%,
+    #9c8252 50%,
+    #f3e8d5 75%,
+    #bd9f67 100%
+  );
+  z-index: -2;
+  filter: blur(4px);
+  transform: rotate(0deg);
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+button:hover::before {
+  transform: rotate(180deg);
+}
+
+button::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: #1a2226;
+  border-radius: 48px;
+  z-index: -1;
+  transition: background 0.4s ease;
+}
+
+button:hover::after {
+  background: rgba(189, 159, 103, 0.08);
+}
+
+button span {
+  display: block;
+  position: relative;
+  z-index: 2;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #e0d0b5;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+button:hover span {
+  color: #ffffff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+
+@media (max-width: 480px) {
+  .content { padding: 24px 16px; width: 92%; }
+  h1 { font-size: 1.7rem; }
+  input[type="number"] { width: 140px; }
+}
+/* ─── Hub Cards ─── */
+.hub-nav {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.hub-card {
+  background: #1a2226;
+  border: 1px solid rgba(189,159,103,0.15);
+  border-radius: 8px;
+  padding: 18px 14px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.hub-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  border-color: rgba(189,159,103,0.35);
+}
+.hub-card .card-icon { font-size: 1.8rem; }
+.hub-card .card-label {
+  color: #e0d0b5;
+  font-size: 0.88rem;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+.hub-card .card-desc {
+  color: #a49683;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.level-badge {
+  font-size: 0.8rem;
+  color: #bd9f67;
+  background: rgba(189,159,103,0.1);
+  border: 1px solid rgba(189,159,103,0.2);
+  border-radius: 20px;
+  padding: 3px 12px;
+  letter-spacing: 0.5px;
+}
+
+.level-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#editLevelWrap { display: none; }
+
+.small-link {
+  font-size: 0.75rem;
+  color: rgba(189,159,103,0.4);
+  cursor: pointer;
+  border-bottom: 1px dashed rgba(189,159,103,0.2);
+  transition: color 0.2s;
+}
+.small-link:hover { color: rgba(189,159,103,0.7); }
+
+@media (max-width: 480px) {
+  .hub-nav { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .hub-card { padding: 14px 8px; }
+  .hub-card .card-icon { font-size: 1.4rem; }
+  .hub-card .card-label { font-size: 0.8rem; }
+  .hub-card .card-desc { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Entry screen (level input) -->
+<div class="container" id="entryScreen">
+  <div class="content">
+    <h1>AOH Helper</h1>
+    <p>Enter your current level to get started:</p>
+    <input type="number" id="levelInput" placeholder="Your Level" min="1">
+    <button onclick="start()"><span>Start</span></button>
+  </div>
+</div>
+
+<!-- Hub screen -->
+<div class="container" id="hubScreen" style="display:none;">
+  <div class="content" style="max-width:420px;">
+    <h1>AOH Helper</h1>
+
+    <div class="level-edit-row">
+      <div class="level-badge" id="hubLevelBadge">Level ---</div>
+      <span class="small-link" onclick="showLevelEdit()">change</span>
+    </div>
+
+    <div id="editLevelWrap" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center;">
+      <input type="number" id="editLevelInput" placeholder="New level" min="1" style="width:120px;">
+      <button onclick="updateLevel()" style="padding:8px 16px; font-size:13px;"><span>Update</span></button>
+      <span class="small-link" onclick="hideLevelEdit()">cancel</span>
+    </div>
+
+    <nav class="hub-nav">
+      <a class="hub-card" id="link-dailies" href="#">
+        <span class="card-icon">📊</span>
+        <span class="card-label">Daily Checker</span>
+        <span class="card-desc">See your daily level limit</span>
+      </a>
+      <a class="hub-card" id="link-planner" href="#">
+        <span class="card-icon">📅</span>
+        <span class="card-label">Level Planner</span>
+        <span class="card-desc">Plan your progression</span>
+      </a>
+      <a class="hub-card" id="link-punishment" href="#">
+        <span class="card-icon">⚠️</span>
+        <span class="card-label">Punishment Checker</span>
+        <span class="card-desc">Analyze ban risk</span>
+      </a>
+      <a class="hub-card" id="link-rules" href="#">
+        <span class="card-icon">📜</span>
+        <span class="card-label">Rules</span>
+        <span class="card-desc">Official server rules</span>
+      </a>
+      <a class="hub-card" id="link-changelog" href="#" style="grid-column: 1 / -1;">
+        <span class="card-icon">🗒️</span>
+        <span class="card-label">Changelog</span>
+        <span class="card-desc">Rule updates &amp; patch notes</span>
+      </a>
+    </nav>
+  </div>
+</div>
+
+<script>
+const LS_LEVEL_KEY = "aoh_player_level";
+
+function getStoredLevel() {
+  const v = localStorage.getItem(LS_LEVEL_KEY);
+  return v ? Number(v) : null;
+}
+
+function getURLLevel() {
+  const params = new URLSearchParams(window.location.search);
+  const lvl = Number(params.get("level"));
+  return (lvl && lvl > 0) ? lvl : null;
+}
+
+let playerLevel = getURLLevel() || getStoredLevel();
+
+function start() {
+  let lvl = Number(document.getElementById("levelInput").value);
+  if(!lvl || lvl <= 0){ alert("Enter a valid level."); return; }
+  playerLevel = lvl;
+  localStorage.setItem(LS_LEVEL_KEY, lvl);
+  showHub();
+}
+
+function showHub() {
+  document.getElementById("entryScreen").style.display = "none";
+  document.getElementById("hubScreen").style.display = "flex";
+  document.getElementById("hubLevelBadge").textContent = "Level " + playerLevel;
+  setLinks();
+}
+
+function setLinks() {
+  document.getElementById("link-dailies").href     = "dailies.html?level="     + playerLevel;
+  document.getElementById("link-planner").href     = "planner.html?level="     + playerLevel;
+  document.getElementById("link-punishment").href  = "punishment.html?level="  + playerLevel;
+  document.getElementById("link-rules").href       = "rules.html?level="       + playerLevel;
+  document.getElementById("link-changelog").href   = "changelog.html?level="   + playerLevel;
+}
+
+function showLevelEdit() {
+  document.getElementById("editLevelWrap").style.display = "flex";
+  document.getElementById("editLevelInput").focus();
+}
+
+function hideLevelEdit() {
+  document.getElementById("editLevelWrap").style.display = "none";
+  document.getElementById("editLevelInput").value = "";
+}
+
+function updateLevel() {
+  const lvl = Number(document.getElementById("editLevelInput").value);
+  if(!lvl || lvl <= 0){ alert("Enter a valid level."); return; }
+  playerLevel = lvl;
+  localStorage.setItem(LS_LEVEL_KEY, lvl);
+  hideLevelEdit();
+  showHub();
+}
+
+// Init: skip entry screen if we already have a level
+if (playerLevel) {
+  showHub();
+}
+</script>
+</body>
+</html>

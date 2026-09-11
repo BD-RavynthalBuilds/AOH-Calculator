@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Official Rules - Age of Heroes Helper</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+.container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 30%, #1a2226 0%, #0d1113 70%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: hidden;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  padding: 40px 20px 60px;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 150%; height: 150%;
+  background-image: radial-gradient(#bd9f67 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.04;
+  animation: backgroundShift 180s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes backgroundShift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-50%, -50%); }
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* ─── Header ─── */
+.header-section { text-align: center; margin-bottom: 10px; }
+
+h1 {
+  color: #bd9f67;
+  font-size: 2.8rem;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  font-family: 'Georgia', serif;
+}
+
+.meta-info {
+  color: #a49683;
+  font-size: 0.95rem;
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+/* ─── Search Bar ─── */
+.search-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.search-wrap svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(189,159,103,0.5);
+  pointer-events: none;
+}
+
+#ruleSearch {
+  width: 100%;
+  padding: 12px 16px 12px 42px;
+  background: #1a2226;
+  border: 1px solid rgba(189,159,103,0.35);
+  border-radius: 8px;
+  color: #e0d0b5;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+#ruleSearch::placeholder { color: rgba(189,159,103,0.35); }
+#ruleSearch:focus {
+  border-color: #bd9f67;
+  box-shadow: 0 0 12px rgba(189,159,103,0.2);
+}
+
+.search-clear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: rgba(189,159,103,0.5);
+  display: none;
+  background: none;
+  border: none;
+  font-size: 18px;
+  line-height: 1;
+  padding: 2px 4px;
+  transition: color 0.2s;
+}
+.search-clear:hover { color: #bd9f67; }
+.search-clear::before, .search-clear::after { display: none; }
+
+.no-results {
+  display: none;
+  text-align: center;
+  color: rgba(189,159,103,0.4);
+  font-style: italic;
+  padding: 40px 0;
+}
+
+/* ─── Selection / Filter Bar ─── */
+.selection-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 0 0 10px 0;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(189,159,103,0.15);
+}
+
+/* ─── Buttons ─── */
+button {
+  position: relative;
+  display: inline-block;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: bold;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer;
+  border-radius: 50px !important;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  z-index: 1;
+  text-decoration: none;
+}
+button:hover { transform: scale(1.04); box-shadow: 0 0 20px rgba(189,159,103,0.3); }
+button::before {
+  content: "";
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: conic-gradient(from 0deg,#bd9f67 0%,#e0d0b5 25%,#9c8252 50%,#f3e8d5 75%,#bd9f67 100%);
+  z-index: -2; filter: blur(4px);
+  transform: rotate(0deg);
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+button:hover::before { transform: rotate(180deg); }
+button::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: #1a2226;
+  border-radius: 48px;
+  z-index: -1;
+  transition: background 0.4s ease;
+}
+button:hover::after { background: rgba(189,159,103,0.08); }
+button span {
+  display: block;
+  position: relative;
+  z-index: 2;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #e0d0b5;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+button:hover span { color: #ffffff; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+button:active { transform: scale(0.98); }
+
+.select-btn.active::after { background: rgba(189,159,103,0.18) !important; }
+.select-btn.active span { color: #f3e8d5 !important; text-shadow: 0 1px 6px rgba(189,159,103,0.6); }
+
+/* ─── Rule Cards Grid ─── */
+.category-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section-title {
+  color: #bd9f67;
+  font-size: 1.4rem;
+  font-family: 'Georgia', serif;
+  letter-spacing: 1px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(189,159,103,0.2);
+}
+
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.rule-card {
+  background: #1e2c33;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(189,159,103,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+.rule-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+}
+
+.rule-card.wide-card { grid-column: 1 / -1; }
+
+.card-header {
+  padding: 14px 18px 12px;
+  border-bottom: 1px solid rgba(189,159,103,0.08);
+}
+
+.card-header h3 {
+  color: #e0d0b5;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.card-body {
+  padding: 14px 18px;
+  color: #c9b99a;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  flex: 1;
+}
+
+.card-body ul {
+  margin-top: 8px;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-body strong { color: #e0d0b5; }
+.card-body em { color: #a49683; }
+
+/* Limits matrix */
+.limits-matrix-box {
+  background: rgba(13,17,19,0.5);
+  border-radius: 6px;
+  padding: 12px;
+  margin: 12px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 16px;
+  font-size: 0.85rem;
+}
+
+.matrix-row {
+  display: contents;
+}
+
+.matrix-row span { color: #c9b99a; padding: 2px 0; }
+.matrix-row .val { color: #bd9f67; font-weight: bold; text-align: right; }
+
+/* Severity tags */
+.punish-tag {
+  padding: 6px 18px;
+  font-size: 0.78rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+.rule-card.severe   .card-header { border-left: 3px solid #e05555; }
+.rule-card.severe   .punish-tag  { color: #e05555; background: rgba(224,85,85,0.06); }
+.rule-card.moderate .card-header { border-left: 3px solid #f4a261; }
+.rule-card.moderate .punish-tag  { color: #f4a261; background: rgba(244,162,97,0.06); }
+.rule-card.info     .card-header { border-left: 3px solid #4cc9f0; }
+.rule-card.info     .punish-tag  { color: #4cc9f0; background: rgba(76,201,240,0.06); }
+
+/* Highlight search matches */
+.search-highlight {
+  background: rgba(189,159,103,0.3);
+  border-radius: 2px;
+  color: #fff;
+}
+
+/* ─── Footer ─── */
+.actions-footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 700px) {
+  h1 { font-size: 2rem; letter-spacing: 1px; }
+  .rules-grid { grid-template-columns: 1fr; }
+  .rule-card.wide-card { grid-column: auto; }
+  .limits-matrix-box { grid-template-columns: 1fr 1fr; font-size: 0.8rem; }
+  .selection-bar { gap: 10px; }
+  button { padding: 10px 18px; font-size: 13px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="content-wrapper">
+
+    <div class="header-section">
+      <h1>Age of Heroes – Official Rules</h1>
+      <div class="meta-info">Last Updated: May 26th, 2026 by Dianna</div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-wrap">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="ruleSearch" placeholder="Search rules… e.g. ban, exploit, alt account" autocomplete="off">
+      <button class="search-clear" id="searchClear" onclick="clearSearch()" title="Clear search">×</button>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="selection-bar" id="filterBar">
+      <button class="select-btn" onclick="filterCategory('gameplay')"><span>Gameplay Rules</span></button>
+      <button class="select-btn" onclick="filterCategory('conduct')"><span>Conduct &amp; Behavior</span></button>
+      <button class="select-btn" onclick="filterCategory('staff')"><span>Account &amp; Staff</span></button>
+    </div>
+
+    <div class="no-results" id="noResults">No rules match your search.</div>
+
+    <!-- ─── Gameplay ─── -->
+    <div id="gameplay-group" class="category-group">
+      <h2 class="section-title">Gameplay Rules</h2>
+      <div class="rules-grid">
+
+        <div class="rule-card moderate wide-card" data-tags="daily level limit progression ban strip overage cap">
+          <div class="card-header"><h3>Rule 1 – Daily Level Limit</h3></div>
+          <div class="card-body">
+            To maintain fair progression, all players must follow the daily level cap system. Exceeding the daily limit will result in severe scale-based punishments.
+            <div class="limits-matrix-box">
+              <div class="matrix-row"><span>Lv. 0–999</span><span class="val">999 / day</span></div>
+              <div class="matrix-row"><span>Lv. 1000–1999</span><span class="val">120 / day</span></div>
+              <div class="matrix-row"><span>Lv. 2000–2999</span><span class="val">88 / day</span></div>
+              <div class="matrix-row"><span>Lv. 3000–3999</span><span class="val">82 / day</span></div>
+              <div class="matrix-row"><span>Lv. 4000–4999</span><span class="val">74 / day</span></div>
+              <div class="matrix-row"><span>Lv. 5000–5999</span><span class="val">69 / day</span></div>
+              <div class="matrix-row"><span>Lv. 6000–6999</span><span class="val">62 / day</span></div>
+              <div class="matrix-row"><span>Lv. 7000–7999</span><span class="val">54 / day</span></div>
+              <div class="matrix-row"><span>Lv. 8000–8999</span><span class="val">46 / day</span></div>
+              <div class="matrix-row"><span>Lv. 9000–9999</span><span class="val">40 / day</span></div>
+              <div class="matrix-row"><span>Lv. 10000–10500</span><span class="val">34 / day</span></div>
+              <div class="matrix-row"><span>Lv. 10500–10999</span><span class="val">30 / day</span></div>
+              <div class="matrix-row"><span>Lv. 11000–11999</span><span class="val">26 / day</span></div>
+              <div class="matrix-row"><span>Lv. 12000–12999</span><span class="val">23 / day</span></div>
+              <div class="matrix-row"><span>Lv. 13000–13999</span><span class="val">21 / day</span></div>
+              <div class="matrix-row"><span>Lv. 14000–14999</span><span class="val">18 / day</span></div>
+              <div class="matrix-row"><span>Lv. 15000–15999</span><span class="val">14 / day</span></div>
+              <div class="matrix-row"><span>Lv. 16000–16999</span><span class="val">11 / day</span></div>
+              <div class="matrix-row"><span>Lv. 17000–17999</span><span class="val">7 / day</span></div>
+              <div class="matrix-row"><span>Lv. 18000–18999</span><span class="val">4 / day</span></div>
+              <div class="matrix-row"><span>Lv. 19000–19999</span><span class="val">2 / day</span></div>
+              <div class="matrix-row"><span>Lv. 20000+</span><span class="val">1 / day</span></div>
+            </div>
+            <strong>Overage Penalty Scale:</strong>
+            <ul>
+              <li><strong>1–5 levels over:</strong> Ban duration matching levels passed + levels removed.</li>
+              <li><strong>6–10 levels over:</strong> Ban = 2× levels passed + additional 2× levels removed.</li>
+              <li><strong>11–50 levels over:</strong> 25 to 45 day ban + 3× the level excess removed.</li>
+              <li><strong>51–100 levels over:</strong> 60 to 120 day ban + 4× removal off the amount exceeded.</li>
+              <li><strong>101–200 levels over:</strong> 120 to 180 day ban + 5× removal off the amount exceeded.</li>
+              <li><strong>201+ levels over:</strong> Permanent ban and automatic hard level reset to 0.</li>
+            </ul>
+          </div>
+          <div class="punish-tag">Ban &amp; Level Stripping</div>
+        </div>
+
+        <div class="rule-card severe" data-tags="exploit script modification cheat hack tool permanent ban macro allowed">
+          <div class="card-header"><h3>Rule 2 – Exploits &amp; Modifications</h3></div>
+          <div class="card-body">
+            The use of exploits, scripts, or any unauthorized tools that modify core gameplay mechanics is strictly prohibited.<br><br>
+            <em>Note: Keyboard macros or simple input hardware automation (such as auto-clicking toolsets) are fully allowed.</em>
+          </div>
+          <div class="punish-tag">Permanent Ban</div>
+        </div>
+
+        <div class="rule-card severe" data-tags="teaming exploiter assist affiliated permanent ban 30 day">
+          <div class="card-header"><h3>Rule 7 – Teaming with Exploiters</h3></div>
+          <div class="card-body">
+            Teaming with or assisting exploiters is treated as exploiting. This includes being present inside servers affiliated with AoH Exploits.
+            <ul>
+              <li><strong>First Offense:</strong> 30-day ban.</li>
+              <li><strong>Repeated Offense:</strong> Same permanent punishment as the primary exploiter.</li>
+            </ul>
+          </div>
+          <div class="punish-tag">30-Day / Perm Ban</div>
+        </div>
+
+        <div class="rule-card moderate" data-tags="bug glitch abuse advantage unintended mechanics temporary permanent">
+          <div class="card-header"><h3>Rule 11 – Bug / Glitch Abuse</h3></div>
+          <div class="card-body">
+            Abusing unintended game bugs, map glitches, or broken scripts to gain a functional competitive advantage over other players is not allowed.
+          </div>
+          <div class="punish-tag">Temporary to Permanent</div>
+        </div>
+
+        <div class="rule-card info" data-tags="troll tank stats build allowed void combat public">
+          <div class="card-header"><h3>Rule 12 &amp; 13 – Troll &amp; Tank Stats</h3></div>
+          <div class="card-body">
+            <ul>
+              <li><strong>Troll Stats:</strong> Allowed. However, using them to maliciously harm players (e.g., dragging or throwing players into the void) is completely forbidden.</li>
+              <li><strong>Tank Stats:</strong> Fully allowed as long as you are outside active player combat areas on public game servers.</li>
+            </ul>
+          </div>
+          <div class="punish-tag">Allowed Builds</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── Conduct ─── -->
+    <div id="conduct-group" class="category-group">
+      <h2 class="section-title">Conduct &amp; Behavior</h2>
+      <div class="rules-grid">
+
+        <div class="rule-card severe" data-tags="discrimination racism sexism homophobia ableism body shaming slur offensive behavior permanent ban">
+          <div class="card-header"><h3>Rule 3 – Discrimination &amp; Behavior</h3></div>
+          <div class="card-body">
+            Discrimination or offensive behavior is strictly prohibited in-game. This zero-tolerance policy covers:
+            <ul>
+              <li>Racism, Sexism, &amp; Homophobia</li>
+              <li>Ableism &amp; Body-shaming</li>
+              <li>The use of offensive slurs</li>
+            </ul>
+          </div>
+          <div class="punish-tag">Permanent Ban</div>
+        </div>
+
+        <div class="rule-card severe" data-tags="death threat kys kill yourself self harm 90 day permanent ban">
+          <div class="card-header"><h3>Rule 4 – Death Threats</h3></div>
+          <div class="card-body">
+            Sending severe threats or encouraging community members to self-harm (including chat shorthand text variants such as "kys") is strictly forbidden.
+            <ul>
+              <li><strong>First Offense:</strong> 90-day ban.</li>
+              <li><strong>Repeated Offense:</strong> Permanent account ban.</li>
+            </ul>
+          </div>
+          <div class="punish-tag">90-Day / Perm Ban</div>
+        </div>
+
+        <div class="rule-card severe" data-tags="doxxing private information leak share personal permanent ban">
+          <div class="card-header"><h3>Rule 5 – Doxxing</h3></div>
+          <div class="card-body">
+            Sharing, publishing, or leaking private personal information regarding any community member or staff layer is prohibited.<br><br>
+            <em>Exception: Reposting information that is already fully public may result in a scaled 30-day ban.</em>
+          </div>
+          <div class="punish-tag">Permanent Ban</div>
+        </div>
+
+        <div class="rule-card info" data-tags="harassment admin developer voice chat mute ban audio noise disruptive">
+          <div class="card-header"><h3>Rule 14 &amp; 15 – Chat Management</h3></div>
+          <div class="card-body">
+            <ul>
+              <li><strong>Admin Harassment:</strong> Harassing administrators, moderation teams, or game developers will result in a ban.</li>
+              <li><strong>Voice Chat:</strong> All conduct rules apply while using VC. Disruptive behavior, excessive noise loops, or audio abuse is forbidden.</li>
+            </ul>
+          </div>
+          <div class="punish-tag">Mute / Ban Hold</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── Account & Staff ─── -->
+    <div id="staff-group" class="category-group">
+      <h2 class="section-title">Account &amp; Staff</h2>
+      <div class="rules-grid">
+
+        <div class="rule-card info" data-tags="level transfer alt account stacking own accounts main">
+          <div class="card-header"><h3>Level Transfer Protocol</h3></div>
+          <div class="card-body">
+            You can request level transfers between your accounts, but levels replace each other instead of stacking.<br><br>
+            <strong>Example:</strong> Main Level 7000 + Alt Level 2500 → transferring drops Main to 0 and sets Alt to 7000.
+            <ul>
+              <li><strong>Level stacking allowed?</strong> <strong>NO</strong>.</li>
+              <li><strong>Transfer to others?</strong> <strong>NO</strong> — only to your own alts.</li>
+            </ul>
+          </div>
+          <div class="punish-tag">System Transfer</div>
+        </div>
+
+        <div class="rule-card moderate" data-tags="roblox ban recovery data loss levels backend staff">
+          <div class="card-header"><h3>Roblox Ban Recovery</h3></div>
+          <div class="card-body">
+            <strong>Lost data due to a global Roblox platform ban?</strong><br><br>
+            <strong>YES</strong>, you can recover. Staff will check the backend records to verify your past level data along with your exact last recorded cash metrics.
+          </div>
+          <div class="punish-tag">Data Recovery</div>
+        </div>
+
+        <div class="rule-card severe" data-tags="banned main account transfer blocked unbanned clean">
+          <div class="card-header"><h3>Banned Main Account Policy</h3></div>
+          <div class="card-body">
+            <strong>Can you pull levels off a banned account?</strong><br><br>
+            <strong>NO</strong>. All official level transfers must originate from a clean account that is completely unbanned.
+          </div>
+          <div class="punish-tag">Transfer Blocked</div>
+        </div>
+
+        <div class="rule-card severe" data-tags="false report lying fabricate fake proof mirror punishment ban">
+          <div class="card-header"><h3>Rule 6 – False Reporting</h3></div>
+          <div class="card-body">
+            Submitting fake reports or providing fabricated evidence to staff layers is not allowed. Violating this triggers the mirror rule.<br><br>
+            <em>Example: Fabricating proof of another player exploiting will get you banned permanently for exploiting.</em>
+          </div>
+          <div class="punish-tag">Mirror Punishment</div>
+        </div>
+
+        <div class="rule-card moderate" data-tags="account sharing responsibility owner sharing appeal 90 days">
+          <div class="card-header"><h3>Rule 8 – Account Responsibility</h3></div>
+          <div class="card-body">
+            Account sharing is allowed, but all active profile behavior remains the responsibility of the account owner. Claims such as <em>"someone else used my account"</em> are rejected.<br><br>
+            Appeals are completely blocked until the 90-day appeal window passes.
+          </div>
+          <div class="punish-tag">Owner Liable</div>
+        </div>
+
+        <div class="rule-card severe" data-tags="alt alternate account bypass ban permanent blacklist">
+          <div class="card-header"><h3>Rule 10 – Alternate Accounts (Alts)</h3></div>
+          <div class="card-body">
+            Alternate profiles are allowed. However, using alternate accounts to bypass active bans or punishments is completely illegal.
+          </div>
+          <div class="punish-tag">Profile Blacklist</div>
+        </div>
+
+        <div class="rule-card moderate" data-tags="joke exploiting brag confession violation temporary ban">
+          <div class="card-header"><h3>Rule 9 – Joking About Exploits</h3></div>
+          <div class="card-body">
+            Publicly joking, baiting, or bragging about exploiting can be treated as a real confession and a valid system violation.
+          </div>
+          <div class="punish-tag">Temporary Ban</div>
+        </div>
+
+        <div class="rule-card info" data-tags="appeal discord 90 days ban not guaranteed">
+          <div class="card-header"><h3>Official Appeals System</h3></div>
+          <div class="card-body">
+            Appeals are processed through the official Age of Heroes Discord server. Reviews are not guaranteed to clear.<br><br>
+            <strong>Crucial Limit:</strong> Appeals are only considered after you have been banned for a minimum of <strong>90 days</strong>.
+          </div>
+          <div class="punish-tag">Discord Only</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="actions-footer" style="gap:12px; flex-wrap:wrap;">
+      <button class="back-btn" onclick="backToHub()"><span>Return to Dashboard</span></button>
+      <button onclick="goChangelog()"><span>Changelog</span></button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function getLevelParam() {
+  return new URLSearchParams(window.location.search).get("level") || "1";
+}
+
+function backToHub() {
+  window.location.href = "welcome_main.html?level=" + getLevelParam();
+}
+
+function goChangelog() {
+  window.location.href = "changelog.html?level=" + getLevelParam();
+}
+
+/* ─── Category Filter ─── */
+function filterCategory(catId) {
+  const selectedBtn = event.currentTarget;
+  const isAlreadyActive = selectedBtn.classList.contains('active');
+
+  document.querySelectorAll('.select-btn').forEach(btn => btn.classList.remove('active'));
+
+  if (isAlreadyActive) {
+    document.querySelectorAll('.category-group').forEach(g => g.style.display = 'flex');
+  } else {
+    selectedBtn.classList.add('active');
+    document.querySelectorAll('.category-group').forEach(g => {
+      g.style.display = g.id === catId + '-group' ? 'flex' : 'none';
+    });
+  }
+
+  // Clear search when switching filter
+  clearSearch();
+}
+
+/* ─── Live Search ─── */
+const searchInput = document.getElementById('ruleSearch');
+const clearBtn    = document.getElementById('searchClear');
+const noResults   = document.getElementById('noResults');
+
+searchInput.addEventListener('input', runSearch);
+
+function runSearch() {
+  const query = searchInput.value.trim().toLowerCase();
+
+  clearBtn.style.display = query ? 'block' : 'none';
+
+  // Remove any existing highlights
+  document.querySelectorAll('.search-highlight').forEach(el => {
+    el.outerHTML = el.innerHTML;
+  });
+
+  if (!query) {
+    // Restore normal view — reset to whatever filter was active
+    document.querySelectorAll('.rule-card').forEach(c => c.style.display = '');
+    document.querySelectorAll('.category-group').forEach(g => {
+      const activeBtn = document.querySelector('.select-btn.active');
+      if (activeBtn) {
+        const cat = activeBtn.getAttribute('onclick').match(/'(\w+)'/)[1];
+        g.style.display = g.id === cat + '-group' ? 'flex' : 'none';
+      } else {
+        g.style.display = 'flex';
+      }
+    });
+    noResults.style.display = 'none';
+    document.getElementById('filterBar').style.display = 'flex';
+    return;
+  }
+
+  // While searching, show all groups and hide filter bar
+  document.getElementById('filterBar').style.display = 'none';
+  document.querySelectorAll('.select-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.category-group').forEach(g => g.style.display = 'flex');
+
+  const terms = query.split(/\s+/);
+  let totalVisible = 0;
+
+  document.querySelectorAll('.rule-card').forEach(card => {
+    const title = card.querySelector('h3').textContent.toLowerCase();
+    const body  = card.querySelector('.card-body').textContent.toLowerCase();
+    const tags  = (card.dataset.tags || '').toLowerCase();
+    const haystack = title + ' ' + body + ' ' + tags;
+
+    const matches = terms.every(t => haystack.includes(t));
+    card.style.display = matches ? '' : 'none';
+    if (matches) { totalVisible++; highlightTerms(card, terms); }
+  });
+
+  // Hide empty groups
+  document.querySelectorAll('.category-group').forEach(g => {
+    const anyVisible = [...g.querySelectorAll('.rule-card')].some(c => c.style.display !== 'none');
+    g.style.display = anyVisible ? 'flex' : 'none';
+  });
+
+  noResults.style.display = totalVisible === 0 ? 'block' : 'none';
+}
+
+function highlightTerms(card, terms) {
+  const body = card.querySelector('.card-body');
+  highlightNode(body, terms);
+  const header = card.querySelector('.card-header h3');
+  highlightNode(header, terms);
+}
+
+function highlightNode(node, terms) {
+  if (!node) return;
+  let html = node.innerHTML;
+  terms.forEach(term => {
+    if (term.length < 2) return;
+    const regex = new RegExp(`(${escapeRegex(term)})`, 'gi');
+    html = html.replace(regex, '<mark class="search-highlight">$1</mark>');
+  });
+  node.innerHTML = html;
+}
+
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function clearSearch() {
+  searchInput.value = '';
+  clearBtn.style.display = 'none';
+  runSearch();
+  document.getElementById('filterBar').style.display = 'flex';
+}
+</script>
+</body>
+</html>
